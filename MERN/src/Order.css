@@ -475,7 +475,7 @@
     color: #0e0d0d; 
     font-weight: 700;
     font-family: jura;
-    bottom: 15px; 
+    /* bottom: 20px;  */
     font-size: 10px;
   } 
   .payment-method {

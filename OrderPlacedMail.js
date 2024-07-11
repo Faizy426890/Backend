@@ -25,7 +25,7 @@ ${items.map(item => `- ${item.name}: ${item.quantity} x ${item.price}`).join('\n
 Thank you for your purchase!
 
 Best regards,
-Your Company Name`;
+Fashion Nova`;
 
     const htmlContent = `<p>Dear Customer,</p>
 <p>Your order has been placed by the seller on <strong>${orderDate}</strong>.</p>

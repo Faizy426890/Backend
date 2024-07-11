@@ -8,15 +8,21 @@ import menu from './images/menubar.png';
 const Navbar = ({ scrollToShirts, scrollToCargos, scrollToHome, showAllProducts }) => {
   const [controlVisible, setControlVisible] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate hook
-
+  
   const handleShowControl = () => {
     setControlVisible(!controlVisible);
-  };
-
+  }; 
+  const handleShowControls = () =>{  
+     navigateHome();
+    setControlVisible(!controlVisible);
+  }
+const navigateHome = () => { 
+navigate('/');
+}
   const navigateToAbout = () => {
     navigate('/about'); // Programmatically navigate to About Us page
   };
-
+ 
   return (
     <>
       <nav className='navbar'>
@@ -25,16 +31,16 @@ const Navbar = ({ scrollToShirts, scrollToCargos, scrollToHome, showAllProducts 
           <img src={Logo} alt="" />
         </div>
         <ul className='list'>
-          <li>
+          <li onClick={navigateHome}>
             <a onClick={scrollToHome}>Home</a>
           </li>
-          <li>
+          <li onClick={navigateHome}>
             <a onClick={scrollToShirts}>Shirts</a>
           </li>
-          <li>
+          <li onClick={navigateHome}>
             <a onClick={scrollToCargos}>Cargos</a>
           </li>
-          <li>
+          <li onClick={navigateHome}>
             <a onClick={showAllProducts}>All Products</a>
           </li>
           <li>
@@ -47,18 +53,18 @@ const Navbar = ({ scrollToShirts, scrollToCargos, scrollToHome, showAllProducts 
           <img className='Cross' src={Cross} alt="" onClick={handleShowControl} />
         </div>
         <ul className='mobile-list'>
-          <li onClick={handleShowControl}>
+          <li onClick={handleShowControls}>
             <a onClick={scrollToHome}>Home</a>
           </li>
-          <li onClick={handleShowControl}>
+          <li onClick={handleShowControls}>
             <a onClick={scrollToShirts}>Shirts</a>
           </li>
           <hr className='hr' />
-          <li onClick={handleShowControl}>
+          <li onClick={handleShowControls}>
             <a onClick={scrollToCargos}>Cargos</a>
           </li>
           <hr className='hr' />
-          <li onClick={handleShowControl}>
+          <li onClick={handleShowControls}>
             <a onClick={showAllProducts}>All Products</a>
           </li>
           <hr className='hr' />
