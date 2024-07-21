@@ -117,8 +117,8 @@ const AdminPanel = () => {
               </div>
               {dropdownVisible && (
                 <div className='order-details'>  
-                  <p className='p' onClick={handleOrdersClick}>Check Orders</p> 
-                  <p className='p' onClick={handlePlaceOrdersClick} >Placed Orders</p>
+                  <p className='p' onClick={handleOrdersClick}>Pending Orders</p> 
+                  <p className='p' onClick={handlePlaceOrdersClick} >Out for Delivery</p>
                 </div>
               )}
             </div>

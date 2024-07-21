@@ -9,14 +9,14 @@ const sendPlacedOrderEmail = async (to, orderDetails) => {
 
     const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
     sendSmtpEmail.to = [{ email: to }];
-    sendSmtpEmail.sender = { email: 'faizanlahori2003@gmail.com', name: 'Fashion Nova' };
-    sendSmtpEmail.subject = 'Order Placed by Seller';
+    sendSmtpEmail.sender = { email: 'faizanlahori2003@gmail.com', name: 'Witty Wardrobe' };
+    sendSmtpEmail.subject = 'Out for Delivery';
 
     const { orderDate, items, totalAmount } = orderDetails;
 
     const textContent = `Dear Customer,
     
-Your order has been placed by the seller on ${orderDate}.
+Your order has been out for delivery ${orderDate}.
 Total Amount: ${totalAmount}
 
 Items:
@@ -25,17 +25,17 @@ ${items.map(item => `- ${item.name}: ${item.quantity} x ${item.price}`).join('\n
 Thank you for your purchase!
 
 Best regards,
-Fashion Nova`;
+Witty Wardrobe`;
 
     const htmlContent = `<p>Dear Customer,</p>
-<p>Your order has been placed by the seller on <strong>${orderDate}</strong>.</p>
+<p>Your order has been out for delivery at <strong>${orderDate}</strong>.</p>
 <p>Total Amount: <strong>${totalAmount}</strong></p>
 <p><strong>Items:</strong></p>
 <ul>
   ${items.map(item => `<li>${item.name}: ${item.quantity} x ${item.price}</li>`).join('')}
 </ul>
 <p>Thank you for your purchase!</p>
-<p>Best regards,<br>Your Company Name</p>`;
+<p>Best regards,<br>Witty Wardrobe</p>`;
 
     sendSmtpEmail.textContent = textContent;
     sendSmtpEmail.htmlContent = htmlContent;

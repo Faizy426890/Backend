@@ -3,19 +3,24 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import './navbar.css';
 import Cross from './images/Cross.png';
 import Logo from './images/Fashion-Nova-Logo.png';
-import menu from './images/menubar.png';
+import menu from './images/menubar.png';  
+import AllProducts from './AllProducts';
 
-const Navbar = ({ scrollToShirts, scrollToCargos, scrollToHome, showAllProducts }) => {
-  const [controlVisible, setControlVisible] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+const Navbar = () => {
+  const [controlVisible, setControlVisible] = useState(false);  
+  const navigate = useNavigate(); // Initialize useNavigate hook 
   
-  const handleShowControl = () => {
-    setControlVisible(!controlVisible);
-  }; 
   const handleShowControls = () =>{  
      navigateHome();
     setControlVisible(!controlVisible);
+  }   
+  const handleShowControl = () =>{  
+   setControlVisible(!controlVisible);
+ }  
+  const showAllProduct = () => { 
+    navigate('/AllProducts');
   }
+  
 const navigateHome = () => { 
 navigate('/');
 }
@@ -32,16 +37,10 @@ navigate('/');
         </div>
         <ul className='list'>
           <li onClick={navigateHome}>
-            <a onClick={scrollToHome}>Home</a>
+            <a>Home</a>
           </li>
-          <li onClick={navigateHome}>
-            <a onClick={scrollToShirts}>Shirts</a>
-          </li>
-          <li onClick={navigateHome}>
-            <a onClick={scrollToCargos}>Cargos</a>
-          </li>
-          <li onClick={navigateHome}>
-            <a onClick={showAllProducts}>All Products</a>
+          <li>
+            <a onClick={showAllProduct}>All Products</a>
           </li>
           <li>
             <a onClick={navigateToAbout}>About Us</a> {/* Use onClick to trigger navigation */}
@@ -54,18 +53,11 @@ navigate('/');
         </div>
         <ul className='mobile-list'>
           <li onClick={handleShowControls}>
-            <a onClick={scrollToHome}>Home</a>
-          </li>
-          <li onClick={handleShowControls}>
-            <a onClick={scrollToShirts}>Shirts</a>
+            <a >Home</a>
           </li>
           <hr className='hr' />
-          <li onClick={handleShowControls}>
-            <a onClick={scrollToCargos}>Cargos</a>
-          </li>
-          <hr className='hr' />
-          <li onClick={handleShowControls}>
-            <a onClick={showAllProducts}>All Products</a>
+          <li onClick={handleShowControl}>
+          <a onClick={showAllProduct}>All Products</a>
           </li>
           <hr className='hr' />
           <li onClick={handleShowControl}>

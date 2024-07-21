@@ -204,7 +204,7 @@
   } 
   .Admin-ProdcutsGrid {
     background-color: var(--secondary-color);
-    max-height: 90vh; /* Limit the height of the product grid */
+    max-height: 100vh; /* Limit the height of the product grid */
     overflow-y: auto; /* Enable vertical scrolling */
   }
   /* Responsiveness */

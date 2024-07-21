@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/Login/*" element={<AdminRoutes />} />
-        <Route path="/*" element={<UserRoutes />} /> 
+        <Route path="*" element={<UserRoutes />} /> 
     <Route path="/confirmOrder" element={<ConfirmDelivery />} />
       </Routes>
     </Router>

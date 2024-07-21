@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import './Order.css';
+import './Order.css'; 
 
 const ConfirmOrder = () => {
   const location = useLocation();
-  const { product } = location.state || {};
+  const { product, quantity: initialQuantity } = location.state || {};
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(product ? product.productPrice : 0);
-  const [orderConfirmed, setOrderConfirmed] = useState(false); // State to track order confirmation
+  const [quantity, setQuantity] = useState(initialQuantity || 1);
+  const [totalPrice, setTotalPrice] = useState(product ? product.productPrice * (initialQuantity || 1) : 0); 
+  const [DeliveryCharges, setDeliveryCharges] = useState(200); 
+  const [orderConfirmed, setOrderConfirmed] = useState(false); 
+  const [GrandTotal, setGrandTotal] = useState(totalPrice + DeliveryCharges);  // State to track order confirmation
 
   useEffect(() => {
     if (product) {
-      setTotalPrice(product.productPrice * quantity);
+      setTotalPrice(product.productPrice * quantity); 
     }
-  }, [quantity, product]);
+  }, [quantity, product]); 
+
+  useEffect(() => {
+    setGrandTotal(totalPrice + DeliveryCharges);
+  }, [totalPrice, DeliveryCharges]);
 
   const onSubmit = async (data) => {
     const orderTime = new Date().toLocaleString();
@@ -81,8 +87,6 @@ const ConfirmOrder = () => {
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-    } else {
-      setQuantity(0);
     }
   };
 
@@ -142,7 +146,7 @@ const ConfirmOrder = () => {
               <div className='headings-order'>
                 <h1>Order Details</h1>
                 <div className='Order'>
-                  {product.image && <img src={product.image} alt={product.productName} />}
+                  {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
                   <div className='order-detail'>
                     <h2 className='P-Name'>{product.productName}</h2>
                     <div className="quantity-controls">
@@ -151,11 +155,24 @@ const ConfirmOrder = () => {
                       <button type="button" className="plus" onClick={handleIncrement}>+</button>
                     </div>
                     <div className="price-info">
-                      <p id='item-price'>Price: Rs. {product.productPrice}</p>
-                      <span className='total-prices'>Total Price: Rs. {totalPrice}</span>
+                      <p id='item-price'>Price: Rs. {product.productPrice}</p> 
+                    </div> 
+                    <div className='Totals'> 
+                      <span>  
+                        <p>Subtotal</p>   
+                        <p>{totalPrice}</p>
+                        </span>  
+                       <span> 
+                        <p>Delivery Charges</p>  
+                        <p>{DeliveryCharges}</p>
+                        </span>  
+                        <span id='Grand-Total'> 
+                        <p>Grand Total</p>  
+                        <p>{GrandTotal}</p>
+                        </span> 
                     </div>
-                  </div>
-                </div>
+                  </div> 
+                </div> 
               </div>
             </>
           ) : (

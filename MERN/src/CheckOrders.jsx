@@ -168,7 +168,7 @@ const CheckOrders = () => {
               <img src={order.Image} alt="" />
             </div>
             <button id='Cancel' className='a' onClick={() => openModal(order._id)}> Cancel order </button>
-            <button id='delivery' className={`a ${deliveryClicked ? 'grey-bg' : ''}`} onClick={() => handlePlaceOrder(order)}> Place order </button>
+            <button id='delivery' className={`a ${deliveryClicked ? 'grey-bg' : ''}`} onClick={() => handlePlaceOrder(order)}> Out for Delivery </button>
           </div>
         ))}
       <Modal

@@ -39,7 +39,7 @@ const PlacedOrder = () => {
             <p><strong>Phone:</strong> {order.phone}</p>
             <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
             <p><strong>Order Placed At:</strong> {order.orderTime}</p>
-            <h2 className='place'>Order Has Been Placed</h2>
+            <h2 className='place'>Out For Delivery</h2>
           </div>
         ))}
       </div>

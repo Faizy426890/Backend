@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Shirts.css';
 
 const Shirts = ({ onBuyNow }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null); 
-  const [showAllProducts, setShowAllProducts] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/products/Shirt', {
+        const response = await fetch('http://localhost:3001/products', {
           method: 'GET',
-          credentials: 'include', // Include cookies with request if needed
+          credentials: 'include',
         });
 
         if (!response.ok) {
@@ -32,10 +33,6 @@ const Shirts = ({ onBuyNow }) => {
     fetchProducts();
   }, []);
 
-  const handleViewAll = () => {
-    setShowAllProducts(true); // Update the state to show all products
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -44,6 +41,10 @@ const Shirts = ({ onBuyNow }) => {
     return <div>{error}</div>;
   }
 
+  const handleProductClick = (product) => {
+    navigate('/ProductDesc', { state: { product } });
+  };
+
   return (
     <>
       <div className='heads'>
@@ -51,25 +52,32 @@ const Shirts = ({ onBuyNow }) => {
       </div>
       <section className="shirts-section">
         <div className='Display-Products'>
-          {products.slice(0, showAllProducts ? products.length : 4).map((product) => (
-            <div key={product._id} className="Product-container">
+          {products.slice(0, 4).map((product) => (
+            <div 
+              key={product._id} 
+              className="Product-container" 
+              onClick={() => handleProductClick(product)}
+            >
               <div className='Product-list'>
-                {product.image && <img src={product.image} alt={product.productName} />} 
+                {product.images[0] && <img src={product.images[0]} alt={product.productName} />} 
                 <h2>{product.productName}</h2>
                 <p>Rs: {product.productPrice}</p>    
               </div>
               <div className="wrapper">
-                <a className='a' onClick={() => onBuyNow(product)}>Buy Now</a>
+                <a 
+                  className='a' 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onBuyNow(product);
+                  }}
+                >
+                  Buy Now
+                </a>
               </div>
             </div> 
           ))}
         </div>
       </section> 
-      {!showAllProducts && (
-        <div className="wrapper">
-          <a id='a' className='a' onClick={handleViewAll}>View All Products</a>
-        </div> 
-      )} 
     </>
   );
 }

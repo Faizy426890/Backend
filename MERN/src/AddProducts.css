@@ -4,9 +4,22 @@
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    height: 72vh; 
+    height: 110vh; 
     width: 70vw;
    }
+   .description-textarea {
+    width: 25vw; /* Make inputs full width */
+    padding: 8px;
+    margin-bottom: 10px; 
+    border-radius: 5px;
+  }
+  
+  .description-textarea { 
+    margin-top: 5px;
+    min-height: 100px; /* Minimum height for the textarea */
+    resize: vertical; /* Allow vertical resizing only */
+    overflow: auto; /* Show scrollbars if needed */
+  }
   
   .AddProducts-Form h1 {
     margin-bottom: 20px;
@@ -17,8 +30,8 @@
   
   .AddProducts-Form form {
     display: flex; 
-    height: 62vh; 
-    width: 30vw;
+    height: 100vh; 
+    width: 35vw;
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
@@ -123,9 +136,18 @@
 }
 @media (max-width: 768px) { 
     .AddProducts-Form form { 
-        height: 55vh; 
+        height: 100vh; 
         width: 62vw;
-    }  
+    }    
+    .AddProducts-Form { 
+      height: 75vh; 
+  }   
+    .description-textarea {
+      width: 50vw; /* Make inputs full width */
+      padding: 8px;
+      margin-bottom: 10px; 
+      border-radius: 5px;
+    }
     .inputs{ 
         height: 3vh; 
         width: 35vw; 
@@ -137,7 +159,51 @@
         color: rgb(197, 196, 196);
     } 
 }
- 
+@media (max-width: 568px) { 
+  .AddProducts-Form form { 
+      height: 90vh; 
+      width: 82vw;
+  }    
+  .AddProducts-Form { 
+    height: 80vh; 
+}    
+.inputs{ 
+  height: 3.5vh; 
+  width: 60vw; 
+  margin: 5px 7px;
+}  
+.description-textarea {
+  width: 65vw; /* Make inputs full width */
+} 
+.picture{ 
+  height: 6vh; 
+  width: 60vw; 
+  color: rgb(197, 196, 196);
+}
+} 
+@media (max-width: 395px) { 
+  .AddProducts-Form form { 
+      height: 105vh; 
+      width: 82vw;
+  }    
+  .AddProducts-Form { 
+    height: 95vh; 
+}    
+.inputs{ 
+  height: 3.5vh; 
+  width: 60vw; 
+  margin: 5px 7px;
+}  
+.description-textarea {
+  width: 65vw; /* Make inputs full width */
+} 
+.picture{ 
+  height: 6vh; 
+  width: 60vw; 
+  color: rgb(197, 196, 196);
+}
+}
+
 @media (max-width:340px) { 
    
   .AddProducts-Form form {

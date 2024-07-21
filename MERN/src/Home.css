@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: 'Red Hat Display', sans-serif;
-    background-color: rgb(14, 13, 13); /* Set the background color of the entire page to black */
-    color: white; /* Set the default text color to white for better contrast */
+    background-color: rgb(19, 18, 18); 
+    color: white;
   }
 
 .navbar {

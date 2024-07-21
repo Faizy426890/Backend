@@ -37,7 +37,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }, // Set to true if using https
+  cookie: { secure: false }, 
 }));
 
 // Middleware to check session before accessing AdminPanel
@@ -55,21 +55,24 @@ app.get('/Login/AdminPanel', requireLogin, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
-app.post('/Login/AdminPanel/Products/:category', upload.single('image'), async (req, res) => {
+app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, res) => {
   try {
-    const { productName, productPrice } = req.body;
-    const productCategory = req.params.category; // Get category from the URL parameter
-    let imageUrl = '';
+    const { productName, productPrice, productDescription } = req.body;
+    const imageUrls = [];
 
-    if (req.file) {
-      const filePath = req.file.path;
+    if (!req.files || !Array.isArray(req.files)) {
+      throw new Error('No files uploaded');
+    }  
+    // Iterate over the array of files
+    for (const file of req.files) {
+      const filePath = file.path;
 
       if (!fs.existsSync(filePath)) {
         throw new Error('File not found');
       }
 
       const result = await uploadToCloudinary(filePath);
-      imageUrl = result.url;
+      imageUrls.push(result.url);
 
       // Clean up by removing the file after uploading
       if (fs.existsSync(filePath)) {
@@ -80,8 +83,8 @@ app.post('/Login/AdminPanel/Products/:category', upload.single('image'), async (
     const newProduct = new Product({
       productName,
       productPrice,
-      image: imageUrl,
-      productCategory,
+      images: imageUrls, // Store an array of image URLs
+      productDescription,
     });
 
     await newProduct.save();
@@ -90,7 +93,8 @@ app.post('/Login/AdminPanel/Products/:category', upload.single('image'), async (
     console.error('Error adding product:', err);
     res.status(500).json({ error: 'Failed to add product.' });
   }
-});
+}); 
+
 
 // Get products from database
 app.get('/products', async (req, res) => {
@@ -99,26 +103,6 @@ app.get('/products', async (req, res) => {
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch products.' });
-  }
-});
-
-app.get('/products/Cargo', async (req, res) => {
-  try {
-    const products = await Product.find({ productCategory: 'Cargo' });
-    res.status(200).json(products);
-  } catch (err) {
-    console.error('Error retrieving products:', err);
-    res.status(500).json({ error: 'Failed to retrieve products.' });
-  }
-});
-
-app.get('/products/Shirt', async (req, res) => {
-  try {
-    const products = await Product.find({ productCategory: 'Shirt' });
-    res.status(200).json(products);
-  } catch (err) {
-    console.error('Error retrieving products:', err);
-    res.status(500).json({ error: 'Failed to retrieve products.' });
   }
 });
 

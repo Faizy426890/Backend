@@ -29,9 +29,7 @@ const About = () => {
       
       <h3>Join Our Community</h3>
       <p>Thank you for choosing Fashion Nova. Whether you're a trendsetter or a fashion enthusiast, we invite you to explore our collections, join our community, and discover why Fashion Nova is more than just a brand—it's a lifestyle.</p>
-      
-      <h3>Connect With Us</h3>
-      <p>Got a question or feedback? Reach out to our friendly customer support team at [Contact Email or Phone Number]. Follow us on [Social Media Platform] for style inspiration, exclusive offers, and the latest fashion updates.</p>
+  
     </div> 
     </>
   );

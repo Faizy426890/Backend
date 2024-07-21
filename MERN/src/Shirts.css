@@ -3,6 +3,14 @@
   margin-top: 10vh;
   text-align: center;
   z-index: 0;
+} 
+.AllProduct-head{ 
+  padding: 20px;
+  text-align: center;
+  z-index: 0;
+} 
+.AllProduct-head h1{  
+margin-top: 10vh;
 }
 #a{ 
   width: 30%; 
@@ -24,11 +32,16 @@
 .Display-Products p {
   color: rgb(221, 220, 220);
   margin-top: 1.5vh;
-}
+} 
 
 .Display-Products img {
   height: 310px;
   width: 240px;
+}
+
+.loading {
+  margin-top: 20px; /* Adjust as needed */
+  font-size: 1.2em;
 }
 
 .close:hover,
@@ -68,8 +81,10 @@
   align-items: center;
   background-color: rgb(19, 19, 19); 
 } 
-.Product-list h2{ 
-margin-top: 2.5vh;
+.Product-list h2{   
+  font-family: jura;
+margin-top: 2.5vh; 
+font-weight: 500;
 }
 .Product-list:hover { 
   background-color: rgb(34, 34, 34);  
@@ -134,8 +149,12 @@ margin-top: 2.5vh;
 @media (max-width: 568px) { 
   
   .Product-list { 
-  width: 100%;  
-  }  
+  width: 90vw;     
+  }   
+  .Product-list img{ 
+    width: 75vw; 
+    height: 40vh;     
+    }  
   .Product-list h2{ 
     margin-top: 2vh;  
     }  
