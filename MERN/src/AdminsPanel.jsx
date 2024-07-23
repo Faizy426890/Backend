@@ -135,7 +135,7 @@ const AdminPanel = () => {
                 {products.map((product) => (
                   <div key={product._id}>
                     <div className='product-item'>
-                      <img src={product.image} alt={product.productName} />
+                      <img src={product.images[0]} alt={product.productName} />
                       <button className='button' onClick={() => handleDeleteProduct(product._id)}>Delete Product</button>
                     </div>
                     <div className='Product-details'>

@@ -9,7 +9,7 @@ const ConfirmOrder = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [quantity, setQuantity] = useState(initialQuantity || 1);
   const [totalPrice, setTotalPrice] = useState(product ? product.productPrice * (initialQuantity || 1) : 0); 
-  const [DeliveryCharges, setDeliveryCharges] = useState(200); 
+  const [DeliveryCharges, setDeliveryCharges] = useState(249); 
   const [orderConfirmed, setOrderConfirmed] = useState(false); 
   const [GrandTotal, setGrandTotal] = useState(totalPrice + DeliveryCharges);  // State to track order confirmation
 
@@ -127,10 +127,6 @@ const ConfirmOrder = () => {
                   </div>
                   <div className='payment-method'>
                     <label className="form-control">
-                      <input type="radio" value="Card Payment" {...register('paymentMethod', { required: 'Payment method is required' })} />
-                      Card Payment
-                    </label>
-                    <label className="form-control">
                       <input type="radio" value="Cash on Delivery" {...register('paymentMethod', { required: 'Payment method is required' })} />
                       Cash on Delivery
                     </label>
@@ -145,15 +141,12 @@ const ConfirmOrder = () => {
               </div>
               <div className='headings-order'>
                 <h1>Order Details</h1>
-                <div className='Order'>
-                  {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
+                <div className='Order'>  
+                  <div className='image-order'>
+                  {product.images[0] && <img src={product.images[0]} alt={product.productName} />}  
+                  </div>
                   <div className='order-detail'>
                     <h2 className='P-Name'>{product.productName}</h2>
-                    <div className="quantity-controls">
-                      <button type="button" className="minus" onClick={handleDecrement}>-</button>
-                      <span className="quantity">{quantity}</span>
-                      <button type="button" className="plus" onClick={handleIncrement}>+</button>
-                    </div>
                     <div className="price-info">
                       <p id='item-price'>Price: Rs. {product.productPrice}</p> 
                     </div> 

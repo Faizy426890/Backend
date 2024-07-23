@@ -137,7 +137,7 @@
   margin: 20px 0;
 }
 
-.order-detail {
+.order-detail { 
   margin-left: 50px; 
   color: #ffffff; 
   height: 20%; 
@@ -187,14 +187,18 @@
   margin: 0 10px;
   font-size: 16px;
 }
-
 .payment-method {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-top: 20px;
   margin-right: 40%;
-}
+} 
+.image-order{ 
+  display: flex; 
+  justify-content: center; 
+  height: 120px;
+} 
 
 .payment-method .form-control {
   display: flex;
@@ -345,11 +349,11 @@
   } 
   .Totals span{  
     bottom: 10vh;
-    left: -98%; 
+    left: -90%; 
     width: 75vw;
   } 
   #Grand-Total{ 
-    left: -98%; 
+    left: -90%; 
     width: 75vw;
   }
 
@@ -471,7 +475,7 @@
     height: 80px;
     width: 80px;
     margin-right: 10px;
-  }
+  } 
   .Totals span p{ 
    margin: 10px 20px; 
   }
@@ -498,9 +502,6 @@
   .order-detail{ 
     width: 44%;
   } 
-  .order-detail h2{ 
-    left: -10%;
-  }
   #Grand-Total{ 
     left: -80%;  
     align-items: center;

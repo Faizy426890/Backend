@@ -145,14 +145,14 @@ const ProductDesc = () => {
         </div>
         <section className="shirts-section">
           <div className='Display-Products'>
-            {products.slice(4, 7).map((product) => (
+            {products.slice(0, 7).map((product) => (
               <div
                 key={product._id}
                 className="Product-container"
                 onClick={() => handleProductClick(product)}
               >
                 <div className='Product-list'>
-                  {product.image && <img src={product.image} alt={product.productName} />}
+                  {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
                   <h2>{product.productName}</h2>
                   <p>Rs: {product.productPrice}</p>
                 </div>

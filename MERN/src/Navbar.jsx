@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import './navbar.css';
 import Cross from './images/Cross.png';
-import Logo from './images/Fashion-Nova-Logo.png';
+import Logo from './images/Capture.png';
 import menu from './images/menubar.png';  
-import AllProducts from './AllProducts';
 
 const Navbar = () => {
   const [controlVisible, setControlVisible] = useState(false);  

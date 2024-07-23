@@ -4,7 +4,7 @@ import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import { login } from './Admin.js';
-import connectDB from './connectMongo.js';
+import {connectToDatabase} from './connectMongo.js';
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js';
 import { uploadToCloudinary } from './cloudinary.js';
@@ -18,10 +18,9 @@ import PlacedOrder from './PlacedOrderSchema.js'; // Fixed typo in import
 dotenv.config();
 
 // Connect to MongoDB
-connectDB();
+connectToDatabase();
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -208,7 +207,7 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) 
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.status(201).json({ message: 'Order placed successfully' });
+    res.status(201).json( {message: 'Order placed successfully', order:placedOrder} );
   } catch (error) {
     console.error('Error placing order:', error);
     res.status(500).json({ message: 'Error placing order', error });

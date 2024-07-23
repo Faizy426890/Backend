@@ -12,7 +12,7 @@ const Footer = () => {
 
       <div className="footer-left">
 
-        <h3>Company<span>logo</span></h3>
+        <h3>Witty<span>Wardrobe</span></h3>
 
         <p className="footer-links">
           <a href="/" className="link-1">Home</a>
@@ -56,7 +56,7 @@ const Footer = () => {
           <a href="https://www.facebook.com/wittywardrobe24?mibextid=ZbWKwL"><img src={Fb} alt="" /> <i className="fa fa-facebook"></i></a>
           <a href="https://www.instagram.com/wittywardrobe24?igsh=dG9kbTBldGJqNWl4"> <img src={insta} alt="" /><i className="fa fa-twitter"></i></a>
           <a href="#"> <img src={mail} alt="" /><i className="fa fa-linkedin"></i></a>
-          <a href="#"><img src={whatsapp} alt="" /><i className="fa fa-github"></i></a>
+          <a href="https://wa.me/+923064275081"><img src={whatsapp} alt="" /><i className="fa fa-github"></i></a>
           </div>
         </div>
 

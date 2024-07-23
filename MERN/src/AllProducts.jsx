@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useMemo } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import './Shirts.css'; 
+
 const AllProducts = ({ onBuyNow }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -31,6 +33,17 @@ const AllProducts = ({ onBuyNow }) => {
     fetchProducts();
   }, []);
 
+  const memoizedProducts = useMemo(() => products, [products]);
+
+  const handleProductClick = (product) => {
+    navigate('/ProductDesc', { state: { product } });
+  };
+
+  const handleBuyNow = (e, product) => {
+    e.stopPropagation(); // Prevent the click from bubbling up to the product container
+    onBuyNow(product);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -38,9 +51,7 @@ const AllProducts = ({ onBuyNow }) => {
   if (error) {
     return <div>{error}</div>;
   }
-  const handleProductClick = (product) => {
-    navigate('/ProductDesc', { state: { product } });
-  };
+
   return (
     <>
       <div className='AllProduct-head'>
@@ -48,18 +59,17 @@ const AllProducts = ({ onBuyNow }) => {
       </div>
       <section className="shirts-section">
         <div className='Display-Products'>
-          {products.map((product) => (
-            <div key={product._id} className="Product-container" 
-            onClick={() => handleProductClick(product)} >
+          {memoizedProducts.map((product) => (
+            <div key={product._id} className="Product-container" onClick={() => handleProductClick(product)}>
               <div className='Product-list'>
                 {product.images[0] && <img src={product.images[0]} alt={product.productName} />} 
                 <h2>{product.productName}</h2>
                 <p>Rs: {product.productPrice}</p>    
               </div>
               <div className="wrapper">
-                <a className='a' onClick={() => onBuyNow(product)}>Buy Now</a>
+                <a className='a' onClick={(e) => handleBuyNow(e, product)}>Buy Now</a>
               </div>
-            </div> 
+            </div>
           ))}
         </div>
       </section> 
