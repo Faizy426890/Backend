@@ -2,20 +2,20 @@
     "version": 2,
     "builds": [
       {
-        "src": "index.js",
-        "use": "@vercel/node"
-      },
-      {
         "src": "MERN/package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "MERN/dist"
+          "distDir": "MERN/dist" 
         }
+      },
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       { "src": "/api/(.*)", "dest": "/index.js" },
-      { "src": "/(.*)", "dest": "/MERN/dist/$1" }
+      { "src": "/(.*)", "dest": "/MERN/dist/$1" } 
     ]
   }
   
