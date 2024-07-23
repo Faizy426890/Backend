@@ -9,7 +9,7 @@
         "src": "MERN/package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "MERN/dist" // Ensure this matches the Vite build output directory
+          "distDir": "MERN/dist"
         }
       }
     ],
