@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'dist' // This should match the directory you are seeing
-  }
+    outDir: 'dist', // Ensure this matches the directory specified in `vercel.json`
+    rollupOptions: {
+      external: [], // Update or remove if unnecessary
+    },
+  },
 });
