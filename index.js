@@ -1,15 +1,14 @@
 import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import configureSession from './sessionConfig.js'; // Import session configuration
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import session from 'express-session';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose'; // Import mongoose for DB connection
 import { login } from './Admin.js';
 import Product from './ProductSchema.js';
-import upload from './multerconfig.js';
+import upload from './multerconfig.js'; 
 import { uploadToCloudinary } from './Cloudinary.js';
 import fs from 'fs';
-import path from 'path';
 import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
@@ -30,13 +29,8 @@ app.use(cors({
   credentials: true,
 }));
 
-// Session middleware
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'your_session_secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-}));
+// Configure sessions
+configureSession(app);
 
 // Middleware to check session before accessing AdminPanel
 const requireLogin = (req, res, next) => {
@@ -253,8 +247,15 @@ app.get('/test-db', async (req, res) => {
 });
 
 // Start the server after successful database connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 mongoose.connection.once('open', () => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 });
+
+export default app; // Export the app
