@@ -235,16 +235,14 @@ app.post('/send-Placed-confirmation', async (req, res) => {
 // Test database connection route
 app.get('/test-db', async (req, res) => {
   try {
-    const connection = await mongoose.connection.db.admin().ping();
-    if (connection.ok === 1) {
-      res.send('MongoDB connection successful');
-    } else {
-      res.send('MongoDB connection failed');
-    }
+    const db = await mongoose.connect(process.env.MONGODB_URI);
+    res.status(200).send('MongoDB connection established');
   } catch (error) {
-    res.status(500).send('MongoDB connection failed');
+    console.error('MongoDB connection error:', error);
+    res.status(500).send('MongoDB connection not established');
   }
 });
+
 
 // Start the server after successful database connection
 mongoose.connect(process.env.MONGODB_URI, {
