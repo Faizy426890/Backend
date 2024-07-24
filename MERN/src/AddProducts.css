@@ -1,0 +1,225 @@
+/* src/AddProducts.css */
+.AddProducts-Form {
+    margin: 20px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 110vh; 
+    width: 70vw;
+   }
+   .description-textarea {
+    width: 25vw; /* Make inputs full width */
+    padding: 8px;
+    margin-bottom: 10px; 
+    border-radius: 5px;
+  }
+  
+  .description-textarea { 
+    margin-top: 5px;
+    min-height: 100px; /* Minimum height for the textarea */
+    resize: vertical; /* Allow vertical resizing only */
+    overflow: auto; /* Show scrollbars if needed */
+  }
+  
+  .AddProducts-Form h1 {
+    margin-bottom: 20px;
+  } 
+  .puts{ 
+    padding: 5px;
+  }
+  
+  .AddProducts-Form form {
+    display: flex; 
+    height: 100vh; 
+    width: 35vw;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    gap: 15px;  
+    background-color: rgb(37, 39, 39); 
+    border-radius: 10px;
+  }
+.inputs{ 
+    height: 4vh; 
+    width: 14vw; 
+    margin: 5px 7px;
+}  
+.picture{ 
+    height: 6vh; 
+    width: 15vw; 
+    color: rgb(197, 196, 196);
+}
+.labels{ 
+    color: rgb(201, 201, 201); 
+    font-family: Jura; 
+    font-weight: 100;
+}
+  .AddProducts-Form label {
+    font-weight: bold;
+  }
+  
+  .AddProducts-Form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .AddProducts-Form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none; 
+    width: 75%;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .AddProducts-Form button:hover {
+    background-color: #218838;
+  }
+  
+  .AddProducts-Form span {
+    color: red;
+    font-size: 12px;
+  } 
+
+#button:disabled,
+#button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+#button:hover:enabled {
+  background-color: #0056b3;
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+} 
+
+.success {
+  border: 1px solid green;
+  background-color: #e6ffe6;
+  color: green;
+}
+
+.error {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+  color: red;
+}
+  @media (max-width: 1024px) { 
+    .AddProducts-Form form { 
+        height: 55vh; 
+        width: 52vw;
+    }  
+    .inputs{ 
+        height: 2.5vh; 
+        width: 20vw; 
+        margin: 5px 7px;
+    }  
+    .picture{ 
+        height: 4vh; 
+        width: 20vw;
+    } 
+    .AddProducts-Form {
+        margin: 20px; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 72vh; 
+        width: 90vw;
+       }
+}
+@media (max-width: 768px) { 
+    .AddProducts-Form form { 
+        height: 100vh; 
+        width: 62vw;
+    }    
+    .AddProducts-Form { 
+      height: 75vh; 
+  }   
+    .description-textarea {
+      width: 50vw; /* Make inputs full width */
+      padding: 8px;
+      margin-bottom: 10px; 
+      border-radius: 5px;
+    }
+    .inputs{ 
+        height: 3vh; 
+        width: 35vw; 
+        margin: 5px 7px;
+    }  
+    .picture{ 
+        height: 5.2vh; 
+        width: 45vw; 
+        color: rgb(197, 196, 196);
+    } 
+}
+@media (max-width: 568px) { 
+  .AddProducts-Form form { 
+      height: 90vh; 
+      width: 82vw;
+  }    
+  .AddProducts-Form { 
+    height: 80vh; 
+}    
+.inputs{ 
+  height: 3.5vh; 
+  width: 60vw; 
+  margin: 5px 7px;
+}  
+.description-textarea {
+  width: 65vw; /* Make inputs full width */
+} 
+.picture{ 
+  height: 6vh; 
+  width: 60vw; 
+  color: rgb(197, 196, 196);
+}
+} 
+@media (max-width: 395px) { 
+  .AddProducts-Form form { 
+      height: 105vh; 
+      width: 82vw;
+  }    
+  .AddProducts-Form { 
+    height: 95vh; 
+}    
+.inputs{ 
+  height: 3.5vh; 
+  width: 60vw; 
+  margin: 5px 7px;
+}  
+.description-textarea {
+  width: 65vw; /* Make inputs full width */
+} 
+.picture{ 
+  height: 6vh; 
+  width: 60vw; 
+  color: rgb(197, 196, 196);
+}
+}
+
+@media (max-width:340px) { 
+   
+  .AddProducts-Form form {
+    display: flex; 
+    height: 70vh; 
+    width: 85vw;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    gap: 15px;  
+    background-color: rgb(37, 39, 39); 
+    border-radius: 10px;
+  }
+.inputs{ 
+    height: 5vh; 
+    width: 56vw; 
+    margin: 2px 4px;
+}  
+} 

@@ -1,0 +1,629 @@
+.Order img {
+  height: 100px;
+  width: 95px;
+  border-radius: 8px;
+  object-fit: cover;
+} 
+
+
+.Order-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  padding: 20px 0;
+}
+
+.Order {
+  display: flex;
+  background-color: rgb(27, 27, 27);
+  border-radius: 8px;
+  height: 70vh;
+  width: 500px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+.Totals span{  
+  display: flex;   
+  width: 470px;  
+  margin-top: 10px; 
+  position: relative; 
+  left: -71%; 
+  padding: 5px; 
+  border-radius: 8px;
+  justify-content: space-between;
+}  
+#Grand-Total{ 
+  background-color: rgb(28, 156, 135); 
+  width: 475px;   
+  margin-top: 25px;
+  left: -71%;
+} 
+#Grand-Total p{ 
+  color: black; 
+  font-weight: 450;
+}
+.price {
+  position: relative;
+  left: 2vw;
+  top: 10vh;
+}
+
+.Order-div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 90vh;
+  width: 100vw;
+}
+
+.Order-head{
+  color: rgb(252, 252, 252);
+  font-family: 'Red Hat Display', sans-serif;
+  margin-left: 2vw;
+}
+
+.Order-form {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.Order-form form {
+  width: 40vw;
+  display: flex;
+  height: 80vh;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 8px;
+  align-items: center;
+  background-color: rgb(20, 20, 20);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.Order-form input,
+.Order-form textarea {
+  margin-top: 1vh;
+  margin-left: 2vw;
+  padding: 10px;
+  display: block;
+  border: 1px solid #9b9a9a;
+  font-family: jura;
+  width: 30vw;
+  font-weight: 600;
+  height: 7vh;
+  color: #888484;
+  border-radius: 5px;
+  background: transparent;
+}
+
+.Order-form button:hover {
+  background-color: #1f1f1f;
+}
+
+.submit {
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  width: 20vw;
+  font-family: jura;
+  margin-top: 2.5vh;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit:hover {
+  color: rgb(206, 206, 206);
+  font-size: medium;
+  transition: 0.4s;
+}
+
+.headings-order {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#item-price {
+  margin-top: 22%;
+}
+
+.headings-order h1 {
+  margin: 20px 0;
+}
+
+.order-detail { 
+  margin-left: 50px; 
+  color: #ffffff; 
+  height: 20%; 
+  width: 45%;
+}
+
+.order-detail h2 {
+  margin: 10px 0; 
+  top: 0;
+  font-size: 24px;
+}
+
+.order-detail p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.quantity{ 
+  background-color: transparent;
+  border: 1px solid rgb(168, 167, 167);
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer; 
+  color: rgb(255, 255, 255); 
+  margin: 0 5px;
+}
+.minus, .plus {
+ background-color: transparent;
+  border: 1px solid rgb(167, 167, 167);
+  padding: 5px 10px;
+  font-size: 13px;
+  cursor: pointer; 
+  color: white;
+  user-select: none;
+}
+
+.minus:hover, .plus:hover {
+  background-color: #ccc;
+}
+
+.num {
+  margin: 0 10px;
+  font-size: 16px;
+}
+.payment-method {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+  margin-right: 40%;
+} 
+.image-order{ 
+  display: flex; 
+  justify-content: center; 
+  height: 120px;
+} 
+
+.payment-method .form-control {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
+  font-family: jura;
+  width: 300px;
+}
+
+.payment-method .form-control input[type="radio"] {
+  width: 100px;
+  height: 20px;
+}  
+.P-Name{ 
+  font-family: jura;  
+  position: relative;  
+  top: 50px; 
+  right:20px;
+}
+#item-price{  
+  margin-left: 85%; 
+  width: 150px;   
+  margin-bottom: 50%;
+  font-size: small;
+} 
+.total-prices{ 
+  background-color: #289f94;;
+  padding: 5px 5px;  
+  position: relative; 
+  right: 25px;   
+  color: #0e0d0d; 
+  font-weight: 700;
+  font-family: jura;
+  bottom: 45px;
+}
+.quantity-controls{ 
+  position: relative; 
+  top: 70px; 
+  width: 140px;
+}
+.payment-method .form-control label {
+  font-size: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .submit {
+    width: 30vw;
+    height: 50px;
+    font-size: large;
+    font-family: jura;
+  }
+
+  .Order {
+    height: 35vh;
+    width: 70vw;
+  } 
+  .Totals span{  
+    bottom: 10vh;
+    left: -50%; 
+    width: 60vw;
+  } 
+  #Grand-Total{ 
+    left: -50%;  
+    align-items: center;
+    width: 65vw;
+  }
+
+  .Order-form form {
+    width: 70vw;
+  }
+
+  .Order-form input,
+  .Order-form textarea {
+    width: 60vw;
+  }
+
+  .order-detail h2 {
+    margin-top: 35px;
+  }
+
+  .Order img {
+    margin-left: 20px;
+  }
+
+  .payment-method {
+    margin-right: 52%;
+  } 
+  #item-price{ 
+    font-size: large;  
+    position: relative;
+    width: 170px;   
+    height: 20px;
+  } 
+  .quantity{ 
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 9px 15px;
+    font-size: 15px;
+    cursor: pointer; 
+    color: white; 
+    margin: 0 5px;
+  }
+  .minus, .plus {
+   background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 15px;
+    font-size: 15px;
+    cursor: pointer; 
+    color: white;
+    user-select: none;
+  }
+  
+} 
+
+@media (max-width: 980px) { 
+
+  .Order {
+    height: 37.5vh;
+    width: 70vw;
+  } 
+  .Totals span{   
+    top: -4vh;
+    left: -68%; 
+    width: 60vw;
+  } 
+  #Grand-Total{ 
+    left: -70%; 
+    width: 65vw; 
+    bottom: 2vh;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .submit {
+    width: 90%;
+    height: 45px;
+    font-size: medium;
+    margin-top: 4vh;
+  }
+  .order-detail {
+    width: 40%;
+  }
+  .Order {
+    height: 48vh;
+    width: 70vw;
+  } 
+  .Totals span{  
+    bottom: 10vh;
+    left: -90%; 
+    width: 75vw;
+  } 
+  #Grand-Total{ 
+    left: -90%; 
+    width: 75vw;
+  }
+
+
+  .Order-form form {
+    width: 85vw;
+  }
+
+  .Order-form input,
+  .Order-form textarea {
+    width: 70vw;
+  } 
+  #item-price{ 
+    font-size: large;  
+    position: relative;
+    width: 170px; 
+    right: 15px;
+  } 
+  .quantity{ 
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 9px 15px;
+    font-size: 15px;
+    cursor: pointer; 
+    color: white; 
+    margin: 0 5px;
+  }
+  .minus, .plus {
+   background-color: transparent;
+    border: 1px solid white;
+    padding: 10px 15px;
+    font-size: 15px;
+    cursor: pointer; 
+    color: white;
+    user-select: none;
+  }
+  .order-detail {
+    margin-left: 120px;
+  }
+
+  .order-detail h2 {
+    font-size: 28px;
+  }
+
+  .Order {
+    width: 85vw;
+  }
+
+  .order-detail p {
+    font-size: larger;
+  }
+}
+
+@media (max-width: 568px) {
+  .order-detail p {
+    font-family: jura;
+    font-size: 15px;
+    margin-left: 120px;
+    margin-top: 24px;
+  } 
+
+ .quantity-controls{ 
+  top: 25px; 
+  left: 20%;
+ }
+  .Totals span , #Grand-Total{  
+    top: -12vh;
+    left: -60%;  
+    width: 83vw; 
+  }   
+  .payment-method {
+    margin-right: 23%;
+  }
+  #item-price{ 
+    font-size: small;  
+    position: relative;
+    width: 100px; 
+    left: 50px; 
+    top:-60px;
+  } 
+  .quantity{ 
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 3px 9px;
+    font-size: 10px;
+    cursor: pointer; 
+    color: white; 
+    margin: 0 5px;
+  }  
+  .Order {
+    width: 90vw;  
+    height: 60vh;
+  }
+  .Order img{ 
+    position: relative; 
+    right: 15px; 
+  }
+  .minus, .plus {
+   background-color: transparent;
+    border: 1px solid white;
+    padding: 4px 9px;
+    font-size: 10px; 
+    cursor: pointer; 
+    color: white;
+    user-select: none;
+  }
+
+  .Order img {
+    margin-left: 10px;
+  }
+
+  .order-detail h2 {
+    font-size: 18px; 
+    top: 0; 
+    left: 10px;
+  }
+
+  .Order img {
+    height: 80px;
+    width: 80px;
+    margin-right: 10px;
+  } 
+  .Totals span p{ 
+   margin: 10px 20px; 
+  }
+  .Order-form form {
+    width: 85vw;
+    height: 80vh;
+  }
+  .order-detail {
+    margin-left: 10px;
+  } 
+}
+ 
+
+@media (max-width: 468px) {
+  .Order {
+    height: 43vh;
+    width: 93vw;
+  } 
+  .Totals span{ 
+    left: -80%;   
+    top: -8vh;
+    width: 88vw; 
+  }      
+  .order-detail{ 
+    width: 44%;
+  } 
+  #Grand-Total{ 
+    left: -80%;  
+    align-items: center;
+    width: 90vw; 
+    top: -8vh;
+  }  
+  #item-price{ 
+    margin-left: 25vw;
+  }
+}
+@media (max-width: 395px) {
+  .order-detail p {
+    font-family: jura;
+    font-size: 13px;
+    margin-left: 100px;
+    margin-top: 22px;
+  } 
+  .Order {
+    height: 50vh;
+    width: 93vw;
+  } 
+  .Totals span{ 
+    left: -85%;   
+    top: -10vh;
+    width: 88vw;  
+    height: 40px;
+  }  
+  #Grand-Total{ 
+    left: -85%; 
+    width: 90vw; 
+    top: -10vh;
+  }   
+  .order-detail{ 
+    width: 44%;
+  }
+   
+  .order-detail h2 {
+    font-size: 18px;
+    margin-left: -10px;
+  }  
+
+  #item-price{ 
+    font-size: medium;  
+    position: relative;
+    width: 80px;  
+    font-size: 10px; 
+    right: 15px;
+  }  
+  .Order img{ 
+   right: 10px;
+  } 
+  .payment-method {
+    margin-right: 20%;
+  }
+
+  .Order img {
+    height: 80px;
+    width: 80px;
+    margin-right: 10px;
+  }
+  .Order-form form {
+    width: 85vw;
+    height: 80vh;
+  }
+  .Order img {
+    margin-left: 0px;
+  } 
+  #Grand-Total{ 
+    left: -82%;
+  }
+} 
+@media (max-width: 370px) {
+  .Totals span{ 
+    left: -98%;   
+    top: -8vh;
+    width: 92vw;  
+    height: 35px;
+  }     
+  .Order {
+    height: 52vh;
+  }  
+   .Order h2{ 
+    font-size: 15px; 
+    left: -5%;
+  }   
+  #Grand-Total{ 
+    left: -90%; 
+    width: 90vw; 
+    top: -8vh;
+  }    
+  .order-detail{ 
+    width: 44%;
+  }
+} 
+@media (max-width: 340px) {
+  .Totals span{ 
+    left: -98%;   
+    top: -10vh;
+    width: 92vw;  
+    height: 35px;
+  }     
+  .Order img{ 
+    height: 60px; 
+    width: 60px;
+  } 
+  .Order h2{ 
+    left: -10%; 
+    top: -30%;
+  }   
+  .quantity-controls{ 
+    top: -5%;
+  } 
+  #item-price{ 
+    margin-top: 10px; 
+    margin-left: 65%;
+  }
+  #Grand-Total{ 
+    left: -90%; 
+    width: 90vw; 
+    top: -10vh;
+  }  
+  .Order{ 
+    height: 52vh;
+  }  
+}

@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+ 
+ .cart-container {
+    position: fixed; /* Use fixed position to keep it relative to the viewport */
+    top: 0;
+    right: 0;
+    width: 40vw; /* Adjust the width as per your design */
+    height: 100vh; /* Full viewport height */
+    background-color: white; /* Example background color */
+    z-index: 1005;
+    transform: translateX(100%); /* Initially move off-screen to the right */
+    transition: transform 0.3s ease; /* Transition transform property */
+  }
+
+  .content-container {
+    position: relative;
+    z-index: 1;
+  } 
+  .cart-container.visible {
+    transform: translateX(0); /* Slide in from the right */
+  } 
+  /* src/styles.css */
