@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap'); 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Your styles */ 
+  
+  .Admin-Container {
+    height: 100vh;
+    width: 100vw;
+    display: flex; 
+    background-color: rgb(12, 12, 12); 
+  }
+  
+  .Admin-Control {
+    height: 100vh;
+    width: 20vw;
+    border-radius: 7px;
+    background-color: rgb(10, 10, 10); 
+    transition: transform 0.3s ease, z-index 0s 0.3s; /* Transition for smooth slide and delayed z-index */
+    z-index: 0;
+  }
+  
+  .Admin-Logo {
+    height: 10vh;
+    border-radius: 7px;
+    background-color: rgb(17, 17, 17); 
+    display: flex;  
+    position: relative;
+    justify-content: center; 
+    align-items: center;
+  } 
+
+  .AdminLogo{ 
+    position: absolute; 
+    left: 5px;
+    height: 45px;
+    width: 45px;
+    filter: invert(61%) sepia(86%) saturate(410%) hue-rotate(132deg) brightness(90%) contrast(90%);
+  } 
+  .Admin-Dash{ 
+   display: flex; 
+   flex-direction: column;  
+   align-items: center;  
+  } 
+  .cross{ 
+    height: 20px; 
+    width: 20px;  
+    position: absolute; 
+    right: 15px; 
+    display: none;
+    filter: invert(84%) sepia(2%) saturate(24%) hue-rotate(347deg) brightness(106%) contrast(100%);
+  }
+  .Admin-Dash p{ 
+    color: white; 
+    font-family: Jura;  
+    padding: 5px;
+  }  
+  .Add-product p:hover , .Add-product img:hover{ 
+   cursor: pointer;  
+   color: rgb(188, 189, 190); 
+   transition: 0.2s ease;
+  } 
+  .Add-product{ 
+    display: flex;
+  } 
+  .Add-product img{   
+    height: 23px; 
+    width: 35px; 
+    filter: invert(61%) sepia(86%) saturate(410%) hue-rotate(132deg) brightness(90%) contrast(90%);
+  } 
+  .orders {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .order-div {
+    position: relative; 
+  }
+  .order-details {
+    position: absolute;
+    top: calc(100% + 10px); /* Position below parent */
+    left: 50%; 
+    transform: translateX(-35%);
+    width: 170px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    display: none; /* Initially hidden */
+    z-index: 10; 
+  }
+  
+   .order-details {
+    display: block; 
+  } 
+  .order-details p:hover{
+    cursor: pointer; 
+    color: rgb(194, 191, 191); 
+    transition: 0.3s ease;
+  }
+  
+  
+  
+  .Admin-ProdcutsGrid {
+    margin-left: 4px;
+    background-color: rgb(22, 21, 21);
+    width: 79vw;
+  }
+   
+   .orders img{ 
+    height: 30px; 
+    width: 25px;   
+    position: relative; 
+    top: 3px;
+    filter: invert(100%) sepia(8%) saturate(1696%) hue-rotate(323deg) brightness(104%) contrast(108%);
+   }
+  .product-heading {
+    background-color: rgb(8, 8, 8);
+    height: 10vh;   
+    position: relative;
+    display: flex;
+    align-items: center; 
+    justify-content: center;  
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .product-heading h2 {
+    color: rgb(255, 255, 255);
+    line-height: 10vh;
+    margin: 0 10px; 
+    font-family: Jura;
+    padding: 0;
+  }   
+  .show-control{ 
+    display: none; 
+    height: 5vh; 
+    width: 5vw;  
+    position: absolute; 
+    left: 5px;
+    filter: invert(61%) sepia(86%) saturate(410%) hue-rotate(132deg) brightness(90%) contrast(90%);
+  }
+  .products-list{ 
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: center;  
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  .product-item{  
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;  
+    flex-grow: 1; 
+     background-color: rgb(20, 19, 20);
+    height: 320px;   
+    border-radius: 5px;
+    margin: 2vw;
+    width: 280px;
+  }   
+  .product-item:hover{ 
+   background-color: rgb(36, 35, 35);  
+   cursor: pointer; 
+   transition: 0.4s ease;
+  }
+  .Product-details{ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+  }
+  .Product-details h3, p{ 
+   color: white; 
+   font-family: jura;   
+   margin: 4px;
+  }  
+ .button {
+    background-color: #ff4c4c; 
+    color: white;
+    border: none; 
+    padding: 10px 15px;  
+    margin-top: 2vh;
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 14px; 
+    width: 60%; 
+    transition: background-color 0.3s ease; 
+  }
+  
+  /* Hover effect for the delete button */
+  .button:hover {
+    background-color: #ff1a1a; /* Darker red on hover */
+  }
+  .product-item img{  
+    height: 35vh; 
+    width: 16vw;
+  } 
+  .Admin-ProdcutsGrid {
+    background-color: var(--secondary-color);
+    max-height: 100vh; /* Limit the height of the product grid */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  /* Responsiveness */
+@media (max-width: 1024px) {
+    .Admin-Control {
+      transform: translateX(-30vw);  
+      transition: 0.4s ease;/* Slide left container off-screen */
+    }  
+    .order-details {
+      position: absolute;
+      top: calc(100% + 10px); /* Position below parent */
+      left: 50%; 
+      transform: translateX(-50%);
+      width: 200px; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      display: block; /* Initially hidden */
+      z-index: 10; /* Ensure it's above other content */
+    }
+    .cross{ 
+      height: 35px; 
+      width: 35px;     
+      display: block;
+    }  
+    #button{ 
+      font-size: medium; 
+      margin-top: 10px;
+    }
+    .AdminLogo{ 
+      height: 55px; 
+      width: 55px;
+    }
+    .Admin-ProdcutsGrid {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;/* Add this line to hide horizontal scrollbar */
+      transition: transform 0.4s ease, width 0.4s ease;
+    }
+    .Admin-Dash p{ 
+   font-size: 30px;
+    }  
+
+    .Add-product img{   
+      height: 35px;  
+      width: 55px;  
+      filter: invert(61%) sepia(86%) saturate(410%) hue-rotate(132deg) brightness(90%) contrast(90%);
+    }
+    .show-control {
+      display: block;
+    }
+  
+    .Admin-Control.active {
+      transform: translateX(0);
+      z-index: 1000; 
+      width: 70vw;
+      transition: transform 0.4s ease, z-index 0s; 
+    } 
+    .product-item{    
+      height: 470px;
+     width: 320px;
+    } 
+    .product-item img{    
+      height: 80%;
+      width: 85%;
+     }
+  }
+  @media (max-width: 768px) { 
+   
+    .show-control {
+      height: 6vh; 
+      width: 8vw;
+    }   
+    #button{ 
+        font-size: small;
+    }
+    .order-details {
+      position: absolute;
+      top: calc(50% + 10px); /* Position below parent */
+      left: 50%; 
+      transform: translateX(-50%);
+      width: 375px; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      display: block; /* Initially hidden */
+      z-index: 10; /* Ensure it's above other content */
+    }
+    .product-item{    
+      height: 400px;
+     width: 320px;
+    } 
+    .product-item img{   
+      width: 85%;
+     }
+  } 
+  @media (max-width: 568px) { 
+   
+    .show-control {
+      height: 6vh; 
+      width: 11vw;
+    } 
+    .Admin-Dash p{ 
+      font-size: large;
+       } 
+       .Add-product img{   
+         height: 21px; 
+         width: 34px; 
+         filter: invert(61%) sepia(86%) saturate(410%) hue-rotate(132deg) brightness(90%) contrast(90%);
+       }  
+       .cross{ 
+        height: 23px; 
+        width: 23px;    
+      } 
+      .AdminLogo{ 
+        height: 40px; 
+        width: 44px;
+      } 
+      .order-details {
+        display: block;  
+        width: 200px; 
+        left: 65%;
+      }
+  } 
+  @media (max-width:408px) {
+    .order-details {
+      position: absolute;
+      top: calc(40% + 5px); /* Position below parent */
+      left: 50%; 
+      transform: translateX(-40%); 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px;
+      display: block; 
+      z-index: 10; 
+     } 
+     #button{ 
+      margin-bottom: 10px; 
+      padding: 5px 5px;
+    } 
+  } 

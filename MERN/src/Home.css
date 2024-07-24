@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+    font-family: 'Red Hat Display', sans-serif;
+    background-color: rgb(19, 18, 18); 
+    color: white;
+  }
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cover-photo {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  top: 10vh;
+}
+
+.cover-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cover-photo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.cover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 1;
+  width: 37vw;
+  max-width: 90%;
+}
+
+.cover-text h1 {
+  font-size: 3.5rem;
+}
+
+.cover-text .highlight {
+  color: #ffa500;
+}
+
+.cover-text a {
+  font-size: 1.3rem;
+  margin-top: 0.5rem;
+  display: block;
+  color: rgb(226, 226, 226);
+}
+
+.Shop-button {
+  border: none;
+  padding: 20px 40px;
+  font-size: 35px;
+  margin-top: 3.5vh;
+  position: relative;
+  background: transparent;
+  color: #ffa500;
+  text-transform: uppercase;
+  border: 3px solid #ffa500;
+  cursor: pointer;
+  transition: all 0.7s;
+  overflow: hidden;
+  border-radius: 100px;
+  outline: none;
+}
+
+.Shop-button:hover {
+  color: #000000;
+  background-color: #ffa500;
+  border: 2px solid #ffa500;
+}
+
+.Shop-button span {
+  transition: all 0.7s;
+  z-index: -1;
+}
+
+.Shop-button .first {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  background: #ffa500;
+}
+
+.Shop-button:hover .first {
+  top: 0;
+  right: 0;
+}
+
+.Shop-button .second {
+  content: "";
+  position: absolute;
+  left: 25%;
+  top: -100%;
+  height: 100%;
+  width: 25%;
+  background: #ffa500;
+}
+
+.Shop-button:hover .second {
+  top: 0;
+  left: 50%;
+}
+
+.Shop-button.third {
+  content: "";
+  position: absolute;
+  left: 50%;
+  height: 100%;
+  top: 100%;
+  width: 25%;
+  background: #ffa500;
+}
+
+.Shop-button:hover .third {
+  top: 0;
+  left: 25%;
+}
+
+.Shop-button.fourth {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background: #ffa500;
+}
+
+.Shop-button:hover .fourth {
+  top: 0;
+  left: 0;
+}
+
+
+
+@media (max-width: 1024px) {
+  .cover-photo img {
+    height: 80vh;
+    width: 100%;
+  } 
+  .cover-photo {
+    height: 80vh;
+  }
+  
+  .cover-photo::after {
+    height: 80vh;
+    width: 100%;
+  }
+  
+  .cover-text {
+    width: 50vw;
+  }
+  
+  .cover-text a {
+    font-size: 1.6rem;
+  }
+  
+  .cover-text h1 {
+    font-size: 3.2rem;
+  }
+  
+  button {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cover-photo img {
+    height: 75vh;
+  }
+  
+  .cover-photo::after {
+    height: 75vh;
+  } 
+  .cover-photo {
+    height: 75vh;
+  }
+  .cover-text a {
+    font-size: 1.3rem;
+  }
+  
+  .cover-text h1 {
+    font-size: 3rem;
+  }
+  
+  .Shop-button {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 508px) {
+  .cover-photo img {
+    height: 60vh;
+  }
+  .cover-photo {
+    height: 60vh;
+  }
+  .cover-photo::after {
+    height: 60vh;
+  }
+  .cover-photo {
+    height: 60vh;
+  }
+  .cover-text {
+    top: 50%;
+    width: 70vw;
+  }
+  .Display-Products img { 
+  margin-top: 15px;
+  }
+  .cover-text a {
+    font-size: 1.1rem;
+  }
+  
+  .cover-text h1 {
+    font-size: 2.6rem;
+  }
+  
+  .Shop-button {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 408px) {
+  .cover-photo img {
+    height: 55vh;
+  }
+  
+  .cover-photo::after {
+    height: 55vh;
+  }
+  
+  .cover-photo {
+    height: 55vh;
+  }
+  .cover-text a {
+    font-size: 0.9rem;
+  }
+  
+  .cover-text h1 {
+    font-size: 2.15rem;
+  }
+  
+  .Shop-button {
+    font-size: 17.5px;
+    padding: 13px 25px;
+  }
+}
