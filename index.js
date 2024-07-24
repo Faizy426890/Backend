@@ -5,13 +5,12 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'; // Import mongoose for DB connection
 import { login } from './Admin.js';
-import { connectToDatabase } from './DB.js';
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js';
 import { uploadToCloudinary } from './Cloudinary.js';
 import fs from 'fs';
 import path from 'path';
-import sendOrderConfirmationEmail from './emailService.js'; 
+import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
@@ -19,7 +18,14 @@ import PlacedOrder from './PlacedOrderSchema.js';
 dotenv.config();
 
 // Connect to MongoDB
-connectToDatabase(); // Ensure this function is defined in DB.js and handles DB connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch((error) => {
+  console.error('Error connecting to MongoDB:', error);
+});
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,7 +45,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your_session_secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }, 
+  cookie: { secure: false },
 }));
 
 // Middleware to check session before accessing AdminPanel
@@ -54,20 +60,6 @@ const requireLogin = (req, res, next) => {
 // Basic route
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API');
-});
-
-// Test DB connection route
-app.get('/test-db', async (req, res) => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }); 
-    res.status(200).send('Database connection successful');
-  } catch (error) {
-    res.status(500).send('Database connection failed');
-    console.error('Database connection error:', error);
-  }
 });
 
 // Login route
@@ -86,7 +78,7 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
 
     if (!req.files || !Array.isArray(req.files)) {
       throw new Error('No files uploaded');
-    }  
+    }
 
     for (const file of req.files) {
       const filePath = file.path;
