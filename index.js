@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: ['mern-psi-blush.vercel.app', 'http://localhost:3000'],// Update to match your frontend URL
+  origin: 'http://localhost:5173', // Update to match your frontend URL
   credentials: true,
 }));
 

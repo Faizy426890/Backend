@@ -1,20 +1,19 @@
-# dependencies
-node_modules
+# Node modules
+node_modules/
 
-# production
-build
-dist
+# Production builds
+build/
+dist/
 
-# misc
 .DS_Store
 .env
 
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS
+# OS-specific
 Thumbs.db
