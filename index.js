@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: 'https://mern-psi-blush.vercel.app/', // Update to match your frontend URL
+  origin: 'http://localhost:5173', // Update to match your frontend URL
   credentials: true,
 }));
 
@@ -46,14 +46,15 @@ const requireLogin = (req, res, next) => {
   } else {
     res.status(401).json({ message: 'Unauthorized' }); // Return unauthorized response if session is not valid
   }
-}; 
-
-app.get('/', (req, res) => {
-  res.send('Welcome to the backend API');
-});
+};
 
 app.post('/Login', login);
-
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend API');
+}); 
+app.get('/Check', (req, res) => {
+  res.send('Welcome to the Check API');
+});
 app.get('/Login/AdminPanel', requireLogin, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
