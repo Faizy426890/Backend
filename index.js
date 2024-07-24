@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose'; // Import mongoose for DB connection
 import { login } from './Admin.js';
 import { connectToDatabase } from './DB.js';
 import Product from './ProductSchema.js';
@@ -13,27 +14,29 @@ import path from 'path';
 import sendOrderConfirmationEmail from './emailService.js'; 
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
-import PlacedOrder from './PlacedOrderSchema.js'; // Fixed typo in import
+import PlacedOrder from './PlacedOrderSchema.js';
 
 dotenv.config();
 
 // Connect to MongoDB
-connectToDatabase();
+connectToDatabase(); // Ensure this function is defined in DB.js and handles DB connection
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:5173', // Update to match your frontend URL
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Update this in .env
   credentials: true,
 }));
 
 // Session middleware
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'your_session_secret',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }, 
@@ -48,16 +51,18 @@ const requireLogin = (req, res, next) => {
   }
 };
 
-app.post('/Login', login);
+// Basic route
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API');
-}); 
+});
+
+// Test DB connection route
 app.get('/test-db', async (req, res) => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+    }); 
     res.status(200).send('Database connection successful');
   } catch (error) {
     res.status(500).send('Database connection failed');
@@ -65,10 +70,15 @@ app.get('/test-db', async (req, res) => {
   }
 });
 
+// Login route
+app.post('/Login', login);
+
+// Admin panel route with session check
 app.get('/Login/AdminPanel', requireLogin, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
+// Add product route
 app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, res) => {
   try {
     const { productName, productPrice, productDescription } = req.body;
@@ -77,7 +87,7 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
     if (!req.files || !Array.isArray(req.files)) {
       throw new Error('No files uploaded');
     }  
-    // Iterate over the array of files
+
     for (const file of req.files) {
       const filePath = file.path;
 
@@ -88,7 +98,6 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
       const result = await uploadToCloudinary(filePath);
       imageUrls.push(result.url);
 
-      // Clean up by removing the file after uploading
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
@@ -97,7 +106,7 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
     const newProduct = new Product({
       productName,
       productPrice,
-      images: imageUrls, // Store an array of image URLs
+      images: imageUrls,
       productDescription,
     });
 
@@ -107,10 +116,9 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
     console.error('Error adding product:', err);
     res.status(500).json({ error: 'Failed to add product.' });
   }
-}); 
+});
 
-
-// Get products from database
+// Get products route
 app.get('/products', async (req, res) => {
   try {
     const products = await Product.find();
@@ -120,7 +128,7 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// Delete product by ID
+// Delete product route
 app.delete('/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -131,11 +139,11 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
+// Create order route
 app.post('/Login/AdminPanel/Orders', async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime } = req.body;
 
-    // Create a new order
     const newOrder = new Order({
       productName,
       Quantity,
@@ -151,17 +159,15 @@ app.post('/Login/AdminPanel/Orders', async (req, res) => {
       orderTime,
     });
 
-    // Save the order to the database
     const savedOrder = await newOrder.save();
-
-    // Respond with the saved order
     res.status(201).json(savedOrder);
   } catch (error) {
-    console.error(error);
+    console.error('Error creating order:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
+// Send order confirmation email route
 app.post('/send-order-confirmation', async (req, res) => {
   const { to, orderDetails } = req.body;
 
@@ -173,6 +179,7 @@ app.post('/send-order-confirmation', async (req, res) => {
   }
 });
 
+// Get all orders route
 app.get('/Login/AdminPanel/Orders', requireLogin, async (req, res) => {
   try {
     const orders = await Order.find();
@@ -182,6 +189,7 @@ app.get('/Login/AdminPanel/Orders', requireLogin, async (req, res) => {
   }
 });
 
+// Delete order route
 app.delete('/Login/AdminPanel/Orders/:id', requireLogin, async (req, res) => {
   try {
     const { id } = req.params;
@@ -192,11 +200,11 @@ app.delete('/Login/AdminPanel/Orders/:id', requireLogin, async (req, res) => {
   }
 });
 
+// Place order route
 app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) => {
   try {
-    const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime } = req.body;
+    const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime, _id } = req.body;
 
-    // Create a new placed order
     const placedOrder = new PlacedOrder({
       Quantity,
       productName,
@@ -212,32 +220,31 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) 
       orderTime,
     });
 
-    // Save the placed order to the database
     await placedOrder.save();
 
-    // Delete the original order from Orders collection
-    const orderId = req.body._id; 
-    const deletedOrder = await Order.findByIdAndDelete(orderId);
+    const deletedOrder = await Order.findByIdAndDelete(_id);
     if (!deletedOrder) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.status(201).json( {message: 'Order placed successfully', order:placedOrder} );
+    res.status(201).json({ message: 'Order placed successfully', order: placedOrder });
   } catch (error) {
     console.error('Error placing order:', error);
     res.status(500).json({ message: 'Error placing order', error });
   }
 });
 
+// Get placed orders route
 app.get('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) => {
   try {
     const placedorders = await PlacedOrder.find().sort({ orderTime: -1 });
     res.status(200).json(placedorders);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch orders.' });
+    res.status(500).json({ error: 'Failed to fetch placed orders.' });
   }
-}); 
+});
 
+// Send placed order confirmation email route
 app.post('/send-Placed-confirmation', async (req, res) => {
   const { to, orderDetails } = req.body;
 
