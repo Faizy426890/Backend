@@ -52,9 +52,19 @@ app.post('/Login', login);
 app.get('/', (req, res) => {
   res.send('Welcome to the backend API');
 }); 
-app.get('/Check', (req, res) => {
-  res.send('Welcome to the Check API');
+app.get('/test-db', async (req, res) => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    res.status(200).send('Database connection successful');
+  } catch (error) {
+    res.status(500).send('Database connection failed');
+    console.error('Database connection error:', error);
+  }
 });
+
 app.get('/Login/AdminPanel', requireLogin, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
