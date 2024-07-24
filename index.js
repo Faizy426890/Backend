@@ -17,14 +17,18 @@ import PlacedOrder from './PlacedOrderSchema.js';
 
 dotenv.config();
 
+let dbConnectionStatus = false; // Variable to track DB connection status
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
   console.log('Connected to MongoDB');
+  dbConnectionStatus = true; // Update DB connection status
 }).catch((error) => {
   console.error('Error connecting to MongoDB:', error);
+  dbConnectionStatus = false; // Update DB connection status
 });
 
 const app = express();
@@ -59,7 +63,11 @@ const requireLogin = (req, res, next) => {
 
 // Basic route
 app.get('/', (req, res) => {
-  res.send('Welcome to the backend API');
+  if (dbConnectionStatus) {
+    res.send('MongoDB connected successfully');
+  } else {
+    res.send('MongoDB not connected');
+  }
 });
 
 // Login route
