@@ -17,20 +17,6 @@ import PlacedOrder from './PlacedOrderSchema.js';
 
 dotenv.config();
 
-let dbConnectionStatus = false; // Variable to track DB connection status
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB');
-  dbConnectionStatus = true; // Update DB connection status
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-  dbConnectionStatus = false; // Update DB connection status
-});
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -63,11 +49,7 @@ const requireLogin = (req, res, next) => {
 
 // Basic route
 app.get('/', (req, res) => {
-  if (dbConnectionStatus) {
-    res.send('MongoDB connected successfully');
-  } else {
-    res.send('MongoDB not connected');
-  }
+  res.send('MongoDB connection status will be checked on /test-db');
 });
 
 // Login route
@@ -256,7 +238,23 @@ app.post('/send-Placed-confirmation', async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Test database connection route
+app.get('/test-db', async (req, res) => {
+  try {
+    const connection = await mongoose.connection.db.admin().ping();
+    if (connection.ok === 1) {
+      res.send('MongoDB connection successful');
+    } else {
+      res.send('MongoDB connection failed');
+    }
+  } catch (error) {
+    res.status(500).send('MongoDB connection failed');
+  }
+});
+
+// Start the server after successful database connection
+mongoose.connection.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 });
