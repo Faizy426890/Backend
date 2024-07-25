@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { login } from './Admin.js';  // Import login function
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js'; 
 import { uploadToCloudinary } from './Cloudinary.js';
@@ -33,7 +32,6 @@ const basicAuth = (req, res, next) => {
   const { username, password } = req.body;
   // Basic username and password check
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
-    req.user = username;  // Add username to request object
     next();  // Proceed to the next middleware or route handler
   } else {
     res.status(401).json({ message: 'Unauthorized' });  // Return unauthorized response
@@ -48,7 +46,7 @@ app.get('/', (req, res) => {
 // Login route
 app.post('/Login', basicAuth, (req, res) => {
   // Login is successful if basicAuth middleware passes
-  res.json({ message: 'Login successful', username: req.user });
+  res.json({ message: 'Login successful' });
 });
 
 // Admin panel route with basic auth check
