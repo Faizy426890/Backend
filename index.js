@@ -24,14 +24,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
-import cors from 'cors';
-
 app.use(cors({
   origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-
 
 // Configure sessions
 configureSession(app); 
@@ -217,8 +214,8 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) 
 // Get placed orders route
 app.get('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) => {
   try {
-    const placedorders = await PlacedOrder.find().sort({ orderTime: -1 });
-    res.status(200).json(placedorders);
+    const placedOrders = await PlacedOrder.find().sort({ orderTime: -1 });
+    res.status(200).json(placedOrders);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch placed orders.' });
   }
@@ -239,14 +236,13 @@ app.post('/send-Placed-confirmation', async (req, res) => {
 // Test database connection route
 app.get('/test-db', async (req, res) => {
   try {
-    const db = await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI);
     res.status(200).send('MongoDB connection established');
   } catch (error) {
     console.error('MongoDB connection error:', error);
     res.status(500).send('MongoDB connection not established');
   }
 });
-
 
 // Start the server after successful database connection
 mongoose.connect(process.env.MONGODB_URI, {
