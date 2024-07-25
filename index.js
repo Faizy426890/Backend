@@ -29,9 +29,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],// Update this in .env
   credentials: true,
 }));
+ 
 
 // Configure sessions
-configureSession(app);
+configureSession(app); 
 
 // Middleware to check session before accessing AdminPanel
 const requireLogin = (req, res, next) => {

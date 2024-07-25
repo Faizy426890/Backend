@@ -5,13 +5,13 @@ const users = [
 
 export const login = (req, res) => {
   const { username, password } = req.body;
-  
+
   // Mock authentication logic (replace with your actual authentication logic)
   const user = users.find(u => u.username === username && u.password === password);
-  
+
   if (user) {
     req.session.user = user;
-    
+
     // Respond with username only
     res.json({ message: 'Login successful', username: user.username });
   } else {
