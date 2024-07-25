@@ -1,8 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
 import cors from 'cors';
+import { login } from './Admin.js';  // Import login function
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js'; 
 import { uploadToCloudinary } from './Cloudinary.js';
@@ -18,8 +18,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());  // Replaces bodyParser.json()
+app.use(express.urlencoded({ extended: true }));  // Replaces bodyParser.urlencoded()
+
 // CORS configuration
 app.use(cors({
   origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
@@ -255,4 +256,8 @@ mongoose.connection.once('open', () => {
   });
 });
 
-export default app; // Export the app
+mongoose.connection.on('error', (error) => {
+  console.error('MongoDB connection error:', error);
+});
+
+export default app;
