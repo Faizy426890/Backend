@@ -11,25 +11,26 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`${apiUrl}/Login`, { // Use backticks for template literals
+      const response = await fetch(`${apiUrl}/Login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        credentials: 'include', // Include credentials in the request
+        credentials: 'include',
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        localStorage.setItem('user', JSON.stringify(responseData.username)); // Store username in localStorage
-        navigate('/Login/AdminPanel');  // Navigate to AdminPanel on successful login
+        localStorage.setItem('user', JSON.stringify(responseData.username));
+        navigate('/Login/AdminPanel');
       } else {
         const errorData = await response.json();
-        setWrongPass(errorData.message); // Set error message received from server
+        setWrongPass(errorData.message || 'Login failed');
       }
     } catch (error) {
       console.error('Error:', error);
+      setWrongPass('An error occurred. Please try again.');
     }
   };
 
