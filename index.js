@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 });
 
 // Login route
-app.post('/Login', basicAuth, (req, res) => {
+app.post('/Login', (req, res) => {
   // Login is successful if basicAuth middleware passes
   res.json({ message: 'Login successful' });
 });
