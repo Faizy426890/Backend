@@ -15,7 +15,6 @@ import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
  
 
-configureSession(app); 
 dotenv.config();
 
 const app = express();
@@ -24,7 +23,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+configureSession(app); 
 // CORS configuration
 app.use(cors({
   origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
