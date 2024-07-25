@@ -81,33 +81,22 @@ const AdminPanel = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const token = localStorage.getItem('authToken'); // Retrieve JWT from local storage
-        if (!token) {
-          throw new Error('Token missing');
-        }
-
-        const response = await fetch(`${apiUrl}/Login/Check`, {
+        const response = await fetch(`${apiUrl}/Login/Check`, { 
           method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`, // Add the JWT token to the Authorization header
-          },
           credentials: 'include',
         });
-
         if (!response.ok) {
           throw new Error('Unauthorized');
         }
-
         // Continue with admin panel logic if authorized
-        // For example, fetch products here
-        fetchProducts();
       } catch (error) {
         console.error('Error:', error);
-        navigate('/Login');
+        navigate('/Login'); 
       }
     };
 
     checkLoginStatus();
+    fetchProducts(); 
   }, [navigate, apiUrl]);
 
   return (
