@@ -1,6 +1,6 @@
 // Mock user data (replace with your actual authentication logic)
 const users = [
-  { username: 'admin', password: 'password' }
+  { username: 'WittyWarDrobe@store', password: 'Store786' }
 ];
 
 export const login = (req, res) => {
