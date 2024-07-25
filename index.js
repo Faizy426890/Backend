@@ -55,7 +55,7 @@ app.post('/Login', basicAuth ,(req, res) => {
 });
 
 // Admin panel route with basic auth check
-app.get('/Login/Check', basicAuth, (req, res) => {
+app.get('/Login/Check', (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
