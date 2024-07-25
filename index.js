@@ -11,6 +11,7 @@ import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
+import { generateToken, verifyToken } from './jwtUtils.js'; // Import JWT utils
 
 dotenv.config();
 
@@ -27,40 +28,44 @@ app.use(cors({
   credentials: true,
 }));
 
-// Middleware for basic authentication
-const basicAuth = (req, res, next) => {
+// Middleware for JWT authentication
+const authenticateJWT = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token == null) return res.status(401).json({ message: 'Token missing' });
+
+  verifyToken(token)
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => {
+      res.status(403).json({ message: 'Forbidden', error: err.message });
+    });
+};
+
+// Login route to issue token
+app.post('/Login', async (req, res) => {
   const { username, password } = req.body;
 
-  console.log('Received credentials:', { username, password });
-
+  // Perform your user validation here (e.g., check username and password)
+  // For simplicity, using environment variables for validation here
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
-    req.user = username;
-    next();
+    const token = generateToken({ username });
+    res.json({ message: 'Login successful', token });
   } else {
     res.status(401).json({ message: 'Unauthorized' });
   }
-};
-
-
-
-// Basic route
-app.get('/', (req, res) => {
-  res.send('MongoDB connection status will be checked on /test-db');
 });
 
-// Login route
-app.post('/Login', basicAuth ,(req, res) => {
-  // Login is successful if basicAuth middleware passes
-  res.json({ message: 'Login successful' });
-});
-
-// Admin panel route with basic auth check
-app.get('/Login/Check', basicAuth, (req, res) => {
+// Admin panel route with JWT auth check
+app.get('/Login/Check', authenticateJWT, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
 // Add product route
-app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, res) => {
+app.post('/Login/AdminPanel/Products', authenticateJWT, upload.array('images', 3), async (req, res) => {
   try {
     const { productName, productPrice, productDescription } = req.body;
     const imageUrls = [];
@@ -110,7 +115,7 @@ app.get('/products', async (req, res) => {
 });
 
 // Delete product route
-app.delete('/products/:id', async (req, res) => {
+app.delete('/products/:id', authenticateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     await Product.findByIdAndDelete(id);
@@ -121,7 +126,7 @@ app.delete('/products/:id', async (req, res) => {
 });
 
 // Create order route
-app.post('/Login/AdminPanel/Orders', async (req, res) => {
+app.post('/Login/AdminPanel/Orders', authenticateJWT, async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime } = req.body;
 
@@ -161,7 +166,7 @@ app.post('/send-order-confirmation', async (req, res) => {
 });
 
 // Get all orders route
-app.get('/Login/AdminPanel/Orders', basicAuth, async (req, res) => {
+app.get('/Login/AdminPanel/Orders', authenticateJWT, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -171,7 +176,7 @@ app.get('/Login/AdminPanel/Orders', basicAuth, async (req, res) => {
 });
 
 // Delete order route
-app.delete('/Login/AdminPanel/Orders/:id', basicAuth, async (req, res) => {
+app.delete('/Login/AdminPanel/Orders/:id', authenticateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     await Order.findByIdAndDelete(id);
@@ -182,7 +187,7 @@ app.delete('/Login/AdminPanel/Orders/:id', basicAuth, async (req, res) => {
 });
 
 // Place order route
-app.post('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
+app.post('/Login/AdminPanel/Orders/PlacedOrder', authenticateJWT, async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime, _id } = req.body;
 
@@ -216,7 +221,7 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => 
 });
 
 // Get placed orders route
-app.get('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
+app.get('/Login/AdminPanel/Orders/PlacedOrder', authenticateJWT, async (req, res) => {
   try {
     const placedOrders = await PlacedOrder.find().sort({ orderTime: -1 });
     res.status(200).json(placedOrders);
