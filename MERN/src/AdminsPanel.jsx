@@ -81,7 +81,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch(`${apiUrl}/Login/AdminPanel`, { // Corrected URL with backticks
+        const response = await fetch(`${apiUrl}/Login/Check`, { 
           method: 'GET',
           credentials: 'include',
         });
@@ -91,13 +91,13 @@ const AdminPanel = () => {
         // Continue with admin panel logic if authorized
       } catch (error) {
         console.error('Error:', error);
-        navigate('/Login'); // Redirect to login page if unauthorized
+        navigate('/Login'); 
       }
     };
 
     checkLoginStatus();
-    fetchProducts(); // Fetch products on component mount
-  }, [navigate]);
+    fetchProducts(); 
+  }, [navigate, apiUrl]);
 
   return (
     <>

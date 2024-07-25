@@ -49,13 +49,13 @@ app.get('/', (req, res) => {
 });
 
 // Login route
-app.post('/Login', (req, res) => {
+app.post('/Login', basicAuth ,(req, res) => {
   // Login is successful if basicAuth middleware passes
   res.json({ message: 'Login successful' });
 });
 
 // Admin panel route with basic auth check
-app.get('/Login/AdminPanel', basicAuth, (req, res) => {
+app.get('/Login/Check', basicAuth, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
