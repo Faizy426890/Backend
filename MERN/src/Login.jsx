@@ -11,24 +11,27 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log('Submitting login request with data:', data);
       const response = await fetch(`${apiUrl}/Login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        credentials: 'include',
+        credentials: 'include', // Ensure this aligns with your backend CORS settings
       });
 
       if (response.ok) {
         const responseData = await response.json();
+        console.log('Login successful:', responseData);
         navigate('/Login/AdminPanel');
       } else {
         const errorData = await response.json();
+        console.error('Login failed:', errorData);
         setWrongPass(errorData.message || 'Login failed');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error during login:', error);
       setWrongPass('An error occurred. Please try again.');
     }
   };
