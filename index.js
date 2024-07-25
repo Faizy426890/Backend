@@ -30,9 +30,7 @@ app.use(cors({
 // Middleware for basic authentication
 const basicAuth = (req, res, next) => {
   const { username, password } = req.body;
-
-  console.log('Username:', username);  // Log the provided username
-  console.log('Password:', password);  // Log the provided password
+  console.log('Received credentials:', { username, password });
 
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
     req.user = username;
