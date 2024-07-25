@@ -1,8 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import cors from 'cors';
-import { login } from './Admin.js';  // Import login function
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js'; 
 import { uploadToCloudinary } from './Cloudinary.js';
@@ -18,9 +18,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(express.json());  // Replaces bodyParser.json()
-app.use(express.urlencoded({ extended: true }));  // Replaces bodyParser.urlencoded()
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // CORS configuration
 app.use(cors({
   origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
@@ -31,13 +30,18 @@ app.use(cors({
 // Middleware for basic authentication
 const basicAuth = (req, res, next) => {
   const { username, password } = req.body;
-  // Basic username and password check
+
+  console.log('Username:', username);  // Log the provided username
+  console.log('Password:', password);  // Log the provided password
+
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
-    next();  // Proceed to the next middleware or route handler
+    req.user = username;
+    next();
   } else {
-    res.status(401).json({ message: 'Unauthorized' });  // Return unauthorized response
+    res.status(401).json({ message: 'Unauthorized' });
   }
 };
+
 
 // Basic route
 app.get('/', (req, res) => {
@@ -256,8 +260,4 @@ mongoose.connection.once('open', () => {
   });
 });
 
-mongoose.connection.on('error', (error) => {
-  console.error('MongoDB connection error:', error);
-});
-
-export default app;
+export default app; // Export the app
