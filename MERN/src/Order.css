@@ -163,8 +163,8 @@
 .quantity{ 
   background-color: transparent;
   border: 1px solid rgb(168, 167, 167);
-  padding: 4px 10px;
-  font-size: 13px;
+  padding: 5px 10px;
+  font-size: 13px; 
   cursor: pointer; 
   color: rgb(255, 255, 255); 
   margin: 0 5px;
@@ -437,10 +437,10 @@
   .quantity{ 
     background-color: transparent;
     border: 1px solid white;
-    padding: 3px 9px;
-    font-size: 10px;
+    padding: 4px 9px;
+    font-size: 9px;
     cursor: pointer; 
-    color: white; 
+    color: white;  
     margin: 0 5px;
   }  
   .Order {
@@ -455,7 +455,7 @@
    background-color: transparent;
     border: 1px solid white;
     padding: 4px 9px;
-    font-size: 10px; 
+    font-size: 9px; 
     cursor: pointer; 
     color: white;
     user-select: none;

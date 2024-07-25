@@ -98,9 +98,11 @@ font-weight: 500;
   align-items: center;
 }
 
-.a {
+.a { 
+  position: relative;
   display: block;
-  width: 100%;
+  width: 100%; 
+  top: 7px;
   height: 50px;
   line-height: 46px;
   text-decoration: none;

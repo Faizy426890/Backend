@@ -161,7 +161,7 @@ app.post('/send-order-confirmation', async (req, res) => {
 });
 
 // Get all orders route
-app.get('/Login/AdminPanel/Orders', basicAuth, async (req, res) => {
+app.get('/Login/AdminPanel/Orders',async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -171,7 +171,7 @@ app.get('/Login/AdminPanel/Orders', basicAuth, async (req, res) => {
 });
 
 // Delete order route
-app.delete('/Login/AdminPanel/Orders/:id', basicAuth, async (req, res) => {
+app.delete('/Login/AdminPanel/Orders/:id',async (req, res) => {
   try {
     const { id } = req.params;
     await Order.findByIdAndDelete(id);
@@ -182,7 +182,7 @@ app.delete('/Login/AdminPanel/Orders/:id', basicAuth, async (req, res) => {
 });
 
 // Place order route
-app.post('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
+app.post('/Login/AdminPanel/Orders/PlacedOrder', async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime, _id } = req.body;
 
@@ -216,7 +216,7 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => 
 });
 
 // Get placed orders route
-app.get('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
+app.get('/Login/AdminPanel/Orders/PlacedOrder',async (req, res) => {
   try {
     const placedOrders = await PlacedOrder.find().sort({ orderTime: -1 });
     res.status(200).json(placedOrders);
@@ -236,18 +236,6 @@ app.post('/send-Placed-confirmation', async (req, res) => {
     res.status(500).json({ error: 'Failed to send order Placement email' });
   }
 });
-
-// Test database connection route
-app.get('/test-db', async (req, res) => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    res.status(200).send('MongoDB connection established');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    res.status(500).send('MongoDB connection not established');
-  }
-});
-
 // Start the server after successful database connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
