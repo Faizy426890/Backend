@@ -13,7 +13,9 @@ import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
+ 
 
+configureSession(app); 
 dotenv.config();
 
 const app = express();
@@ -31,7 +33,6 @@ app.use(cors({
 }));
 
 // Configure sessions
-configureSession(app); 
 
 // Middleware to check session before accessing AdminPanel
 const requireLogin = (req, res, next) => {
