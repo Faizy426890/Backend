@@ -24,12 +24,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
+import cors from 'cors';
+
 app.use(cors({
-  origin: 'https://mern-gules-eta.vercel.app'|| 'http://localhost:5173',  
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],// Update this in .env
+  origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
- 
+
 
 // Configure sessions
 configureSession(app); 
