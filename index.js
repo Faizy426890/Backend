@@ -25,7 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Update this in .env
+  origin: 'https://mern-gules-eta.vercel.app'|| 'http://localhost:5173',  
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],// Update this in .env
   credentials: true,
 }));
 
