@@ -22,7 +22,6 @@ const Login = () => {
 
       if (response.ok) {
         const responseData = await response.json();
-        localStorage.setItem('user', JSON.stringify(responseData.username));
         navigate('/Login/AdminPanel');
       } else {
         const errorData = await response.json();

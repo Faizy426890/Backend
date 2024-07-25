@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cloudinary": "^2.2.0",
     "connect-mongo": "^5.1.0",

@@ -1,10 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import configureSession from './sessionConfig.js'; // Import session configuration
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { login } from './Admin.js';
+import { login } from './Admin.js';  // Import login function
 import Product from './ProductSchema.js';
 import upload from './multerconfig.js'; 
 import { uploadToCloudinary } from './Cloudinary.js';
@@ -13,7 +12,6 @@ import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
- 
 
 dotenv.config();
 
@@ -29,16 +27,16 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
- 
-configureSession(app); 
-// Configure sessions
 
-// Middleware to check session before accessing AdminPanel
-const requireLogin = (req, res, next) => {
-  if (req.session.user) {
-    next(); // Proceed to the next middleware or route handler
+// Middleware for basic authentication
+const basicAuth = (req, res, next) => {
+  const { username, password } = req.body;
+  // Basic username and password check
+  if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
+    req.user = username;  // Add username to request object
+    next();  // Proceed to the next middleware or route handler
   } else {
-    res.status(401).json({ message: 'Unauthorized' }); // Return unauthorized response if session is not valid
+    res.status(401).json({ message: 'Unauthorized' });  // Return unauthorized response
   }
 };
 
@@ -48,10 +46,13 @@ app.get('/', (req, res) => {
 });
 
 // Login route
-app.post('/Login', login);
+app.post('/Login', basicAuth, (req, res) => {
+  // Login is successful if basicAuth middleware passes
+  res.json({ message: 'Login successful', username: req.user });
+});
 
-// Admin panel route with session check
-app.get('/Login/AdminPanel', requireLogin, (req, res) => {
+// Admin panel route with basic auth check
+app.get('/Login/AdminPanel', basicAuth, (req, res) => {
   res.json({ message: 'Welcome to the admin panel!' });
 });
 
@@ -157,7 +158,7 @@ app.post('/send-order-confirmation', async (req, res) => {
 });
 
 // Get all orders route
-app.get('/Login/AdminPanel/Orders', requireLogin, async (req, res) => {
+app.get('/Login/AdminPanel/Orders', basicAuth, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -167,7 +168,7 @@ app.get('/Login/AdminPanel/Orders', requireLogin, async (req, res) => {
 });
 
 // Delete order route
-app.delete('/Login/AdminPanel/Orders/:id', requireLogin, async (req, res) => {
+app.delete('/Login/AdminPanel/Orders/:id', basicAuth, async (req, res) => {
   try {
     const { id } = req.params;
     await Order.findByIdAndDelete(id);
@@ -178,7 +179,7 @@ app.delete('/Login/AdminPanel/Orders/:id', requireLogin, async (req, res) => {
 });
 
 // Place order route
-app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) => {
+app.post('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime, _id } = req.body;
 
@@ -212,7 +213,7 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) 
 });
 
 // Get placed orders route
-app.get('/Login/AdminPanel/Orders/PlacedOrder', requireLogin, async (req, res) => {
+app.get('/Login/AdminPanel/Orders/PlacedOrder', basicAuth, async (req, res) => {
   try {
     const placedOrders = await PlacedOrder.find().sort({ orderTime: -1 });
     res.status(200).json(placedOrders);
