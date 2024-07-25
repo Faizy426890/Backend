@@ -2,7 +2,9 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
 const configureSession = (app) => {
-  const isProduction = process.env.NODE_ENV === 'production'; // Check if the environment is production
+  // Set secure cookies to false by default
+  const isSecure = false; // You can adjust this based on your environment
+
   app.use(session({
     secret: process.env.SESSION_SECRET || 'your_session_secret',
     resave: false,
@@ -12,10 +14,10 @@ const configureSession = (app) => {
       ttl: 14 * 24 * 60 * 60 // 14 days
     }),
     cookie: {
-      secure: isProduction, // Set to true if using HTTPS in production
+      secure: isSecure, // Set to true if using HTTPS
       maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days
-      sameSite: isProduction ? 'none' : 'lax' // Handle cross-origin requests
-    }
+      sameSite: isSecure ? 'none' : 'lax' // Handle cross-origin requests
+    },
   }));
 };
 

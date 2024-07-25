@@ -11,13 +11,13 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch(`${apiUrl}/login`, { // Ensure the endpoint matches the backend
+      const response = await fetch(`${apiUrl}/Login`, { // Use backticks for template literals
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        credentials: 'include', // Ensure credentials are included in the request
+        credentials: 'include', // Include credentials in the request
       });
 
       if (response.ok) {
