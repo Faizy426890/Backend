@@ -29,14 +29,10 @@ app.use(cors({
 
 // Middleware for basic authentication
 const basicAuth = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) return res.status(401).json({ message: 'No credentials provided' });
+  const { username, password } = req.body;
 
-  const [scheme, credentials] = authHeader.split(' ');
-  if (scheme !== 'Basic' || !credentials) return res.status(401).json({ message: 'Invalid credentials format' });
+  console.log('Received credentials:', { username, password });
 
-  const [username, password] = Buffer.from(credentials, 'base64').toString().split(':');
-  
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
     req.user = username;
     next();
@@ -44,6 +40,7 @@ const basicAuth = (req, res, next) => {
     res.status(401).json({ message: 'Unauthorized' });
   }
 };
+
 
 
 // Basic route
