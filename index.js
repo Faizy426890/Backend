@@ -23,14 +23,14 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-configureSession(app); 
 // CORS configuration
 app.use(cors({
   origin: 'https://mern-gules-eta.vercel.app', // Allow only this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-
+ 
+configureSession(app); 
 // Configure sessions
 
 // Middleware to check session before accessing AdminPanel
