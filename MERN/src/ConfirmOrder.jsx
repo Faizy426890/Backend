@@ -35,7 +35,7 @@ const ConfirmOrder = () => {
     };
 
     try {
-      const orderResponse = await fetch('http://localhost:3001/Login/AdminPanel/Orders', {
+      const orderResponse = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const ConfirmOrder = () => {
       reset();
 
       // Send confirmation email
-      const emailResponse = await fetch('http://localhost:3001/send-order-confirmation', {
+      const emailResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-order-confirmation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

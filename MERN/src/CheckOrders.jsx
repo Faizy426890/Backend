@@ -29,12 +29,12 @@ const CheckOrders = () => {
   const [orders, setOrders] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleteOrderId, setDeleteOrderId] = useState(null);
-  const [deliveryClicked, setDeliveryClicked] = useState(false); // State to track button click
+  const [deliveryClicked, setDeliveryClicked] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:3001/Login/AdminPanel/Orders', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders`, {
           credentials: 'include',
         });
         if (response.ok) {
@@ -54,13 +54,12 @@ const CheckOrders = () => {
   const handleDeleteOrder = async () => {
     try {
       if (deleteOrderId) {
-        const response = await fetch(`http://localhost:3001/Login/AdminPanel/Orders/${deleteOrderId}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders/${deleteOrderId}`, {
           method: 'DELETE',
           credentials: 'include',
         });
   
         if (response.ok) {
-          // Remove the deleted order from the local state
           setOrders(orders.filter(order => order._id !== deleteOrderId));
           console.log('Order deleted successfully');
         } else {
@@ -70,41 +69,33 @@ const CheckOrders = () => {
     } catch (error) {
       console.error('Error deleting order:', error);
     } finally {
-      closeModal(); // Close modal regardless of success or failure
+      closeModal();
     }
   };
   
   const handlePlaceOrder = async (order) => {
     try {
-      const currentTime = new Date().toLocaleString(); // Get current time in a readable format
-  
-      // Append the orderTime field to the order object
-      const orderWithTime = {
-        ...order,
-        orderTime: currentTime,
-      };
-  
-      // Step 1: Post the order to the backend endpoint
-      const postResponse = await fetch(`http://localhost:3001/Login/AdminPanel/Orders/PlacedOrder`, {
+      const currentTime = new Date().toLocaleString();
+      const orderWithTime = { ...order, orderTime: currentTime };
+
+      const postResponse = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders/PlacedOrder`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(orderWithTime), // Send the modified order object
+        body: JSON.stringify(orderWithTime),
       });
-  
+
       if (!postResponse.ok) {
         throw new Error('Failed to place order');
       }
-  
-      // Step 2: Delete the order locally from the UI
+
       setOrders(orders.filter(o => o._id !== order._id));
       console.log('Order placed successfully and removed from list');
-      setDeliveryClicked(true); // Set delivery button clicked state
-  
-      // Step 3: Send confirmation email
-      const emailResponse = await fetch('http://localhost:3001/send-Placed-confirmation', {
+      setDeliveryClicked(true);
+
+      const emailResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-Placed-confirmation`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,16 +110,14 @@ const CheckOrders = () => {
         }),
         credentials: 'include',
       });
-  
+
       if (!emailResponse.ok) {
         throw new Error('Failed to send confirmation email');
       }
-  
+
       console.log('Confirmation email sent successfully');
-  
     } catch (error) {
       console.error('Error placing order:', error);
-      // Handle network errors or other exceptions
     }
   };
   
@@ -140,14 +129,14 @@ const CheckOrders = () => {
   const closeModal = () => {
     setModalIsOpen(false);
     setDeleteOrderId(null);
-    setDeliveryClicked(false); // Reset delivery button clicked state
+    setDeliveryClicked(false);
   };
 
   return (
     <div className='show-order'> 
       <h2 className='place'>PENDING ORDERS</h2>
       {orders
-       .slice() 
+        .slice()
         .map(order => (
           <div key={order._id} className='order'>
             <div className='order-flex'>
@@ -167,8 +156,8 @@ const CheckOrders = () => {
             <div className='Order-image'>
               <img src={order.Image} alt="" />
             </div>
-            <button id='Cancel' className='a' onClick={() => openModal(order._id)}> Cancel order </button>
-            <button id='delivery' className={`a ${deliveryClicked ? 'grey-bg' : ''}`} onClick={() => handlePlaceOrder(order)}> Out for Delivery </button>
+            <button id='Cancel' className='a' onClick={() => openModal(order._id)}>Cancel order</button>
+            <button id='delivery' className={`a ${deliveryClicked ? 'grey-bg' : ''}`} onClick={() => handlePlaceOrder(order)}>Out for Delivery</button>
           </div>
         ))}
       <Modal
@@ -178,7 +167,7 @@ const CheckOrders = () => {
         contentLabel="Confirm Delete Modal"
       >
         <h2>Confirm Cancel</h2>
-        <p>Are you sure you want to Cancel this order?</p>
+        <p>Are you sure you want to cancel this order?</p>
         <div className="modal-buttons">
           <button className="modal-button-yes" onClick={handleDeleteOrder}>Yes</button>
           <button className="modal-button-no" onClick={closeModal}>No</button>

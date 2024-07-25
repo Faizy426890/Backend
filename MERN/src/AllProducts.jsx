@@ -9,9 +9,10 @@ const AllProducts = ({ onBuyNow }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async () => { 
+      const apiUrl = import.meta.env.VITE_API_URL; 
       try {
-        const response = await fetch('http://localhost:3001/products', {
+        const response = await fetch(`${apiUrl}/products`, {
           method: 'GET',
           credentials: 'include', // Include cookies with request if needed
         });

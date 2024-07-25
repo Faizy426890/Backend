@@ -7,11 +7,12 @@ const Shirts = ({ onBuyNow }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL; // Fetch API URL from environment variables
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/products', {
+        const response = await fetch(`${apiUrl}/products`, { // Corrected URL with template literals
           method: 'GET',
           credentials: 'include',
         });
@@ -31,7 +32,7 @@ const Shirts = ({ onBuyNow }) => {
     };
 
     fetchProducts();
-  }, []);
+  }, [apiUrl]); // Added apiUrl as dependency to useEffect
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -48,7 +49,7 @@ const Shirts = ({ onBuyNow }) => {
   return (
     <>
       <div className='heads'>
-        <h1>SHIRTS</h1>
+        <h1>PRODUCTS</h1>
       </div>
       <section className="shirts-section">
         <div className='Display-Products'>
