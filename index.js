@@ -28,17 +28,28 @@ app.use(cors({
 }));
 
 // Middleware for basic authentication
+// Middleware for basic authentication
 const basicAuth = (req, res, next) => {
-  const { username, password } = req.body;
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
 
-  console.log('Received credentials:', { username, password });
+  const [type, credentials] = authHeader.split(' ');
+
+  if (type !== 'Basic' || !credentials) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const [username, password] = Buffer.from(credentials, 'base64').toString().split(':');
 
   if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
     req.user = username;
-    next();
-  } else {
-    res.status(401).json({ message: 'Unauthorized' });
+    return next();
   }
+
+  return res.status(401).json({ message: 'Unauthorized' });
 };
 
 
