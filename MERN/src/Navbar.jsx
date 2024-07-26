@@ -9,20 +9,23 @@ const Navbar = () => {
   const [controlVisible, setControlVisible] = useState(false);  
   const navigate = useNavigate(); // Initialize useNavigate hook 
   
-  const handleShowControls = () =>{  
-     navigateHome();
+  const handleShowControl = () => {  
     setControlVisible(!controlVisible);
-  }   
-  const handleShowControl = () =>{  
-   setControlVisible(!controlVisible);
- }  
+  }  
+
+  const handleShowControlAndNavigate = (navigateTo) => {
+    handleShowControl();
+    navigate(navigateTo);
+  }
+
   const showAllProduct = () => { 
     navigate('/AllProducts');
   }
-  
-const navigateHome = () => { 
-navigate('/');
-}
+
+  const navigateHome = () => { 
+    navigate('/');
+  }
+
   const navigateToAbout = () => {
     navigate('/about'); // Programmatically navigate to About Us page
   };
@@ -51,16 +54,16 @@ navigate('/');
           <img className='Cross' src={Cross} alt="" onClick={handleShowControl} />
         </div>
         <ul className='mobile-list'>
-          <li onClick={handleShowControls}>
-            <a >Home</a>
+          <li onClick={() => handleShowControlAndNavigate('/')}>
+            <a>Home</a>
           </li>
           <hr className='hr' />
-          <li onClick={handleShowControl}>
-          <a onClick={showAllProduct}>All Products</a>
+          <li onClick={() => handleShowControlAndNavigate('/AllProducts')}>
+            <a>All Products</a>
           </li>
           <hr className='hr' />
-          <li onClick={handleShowControl}>
-            <a onClick={navigateToAbout}>About Us</a> {/* Use onClick to trigger navigation */}
+          <li onClick={() => handleShowControlAndNavigate('/about')}>
+            <a>About Us</a> {/* Use onClick to trigger navigation */}
           </li>
           <hr className='hr' />
         </ul>

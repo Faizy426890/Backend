@@ -210,16 +210,13 @@ body {
 
 @media (max-width: 508px) {
   .cover-photo img {
-    height: 60vh;
+    height: 52vh;
   }
   .cover-photo {
-    height: 60vh;
+    height: 52vh;
   }
   .cover-photo::after {
-    height: 60vh;
-  }
-  .cover-photo {
-    height: 60vh;
+    height: 52vh;
   }
   .cover-text {
     top: 50%;
@@ -243,15 +240,15 @@ body {
 
 @media (max-width: 408px) {
   .cover-photo img {
-    height: 55vh;
+    height: 50vh;
   }
   
   .cover-photo::after {
-    height: 55vh;
+    height: 52vh;
   }
   
   .cover-photo {
-    height: 55vh;
+    height: 51vh;
   }
   .cover-text a {
     font-size: 0.9rem;
