@@ -56,7 +56,7 @@ const AllProducts = ({ onBuyNow }) => {
   return (
     <>
       <div className='AllProduct-head'>
-        <h1>ALL PRODUCTS</h1>
+        <h1>OUR COLLECTION</h1>
       </div>
       <section className="shirts-section">
         <div className='Display-Products'>

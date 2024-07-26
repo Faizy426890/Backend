@@ -48,7 +48,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p> Witty wardrobe © all rights reserved . Developed by Blaze Tech.</p>
+          <p> Witty wardrobe © all rights reserved . Developed by Blaze Tech.</p> 
         </div>
       </footer>
     </>

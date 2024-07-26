@@ -90,7 +90,8 @@
   .Logo{ 
     height: 120%; 
     width: 11.5%;
-  } 
+  }  
+
   .Logo img{ 
     height: 50px;  
     margin-top: 25px;
@@ -136,7 +137,8 @@
 
     .navbar { 
      justify-content: center; 
-     align-items: center;
+     align-items: center; 
+     height: 9.5vh;
     }
     .Logo img{ 
       height: 60px;  
@@ -145,19 +147,38 @@
      margin-left: -20px;
     }
     .mobile-nav {
-      display: block; 
+      display: block;   
         transform: translateX(-55vw);  
-        transition: 0.4s ease;/* Slide left container off-screen */
+        transition: 0.45s ease;/* Slide left container off-screen */
       }  
       .mobile-nav.active {
         transform: translateX(0);
         z-index: 1000; 
         width: 70vw;
-        transition: transform 0.4s ease, z-index 0s; 
+        transition: transform 0.45s ease, z-index 0s; 
       }  
       .Cross {
         height: 30px;
         width: 30px;
+      }  
+      .Nav-Footer{  
+       position: absolute; 
+       bottom: 3vh; 
+       left: 10%;
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center;
+      }
+      .Nav-Footer p{ 
+       font-size: 11px; 
+       color: #c7c3c3;
+      } 
+      .p2{ 
+        font-size: 9px;  
+        position: relative; 
+        top: 3px;
+        color: #c7c3c3;
       }
   }
    
@@ -181,7 +202,7 @@
    @media (max-width: 468px) { 
     .Logo img{ 
       height: 40px;  
-      margin-top: 50px;
+      margin-top: 40px;
       width: 300px;    
       position: relative; 
       right: 125%;
@@ -195,7 +216,7 @@
       }  
       .Logo img{ 
         height: 35px;  
-        margin-top: 45px;
+        margin-top: 36px;
         width: 250px;    
         position: relative; 
         right: 100%;

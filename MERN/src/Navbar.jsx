@@ -42,7 +42,7 @@ const Navbar = () => {
             <a>Home</a>
           </li>
           <li>
-            <a onClick={showAllProduct}>All Products</a>
+            <a onClick={showAllProduct}>Our Collection</a>
           </li>
           <li>
             <a onClick={navigateToAbout}>About Us</a> {/* Use onClick to trigger navigation */}
@@ -59,14 +59,18 @@ const Navbar = () => {
           </li>
           <hr className='hr' />
           <li onClick={() => handleShowControlAndNavigate('/AllProducts')}>
-            <a>All Products</a>
+            <a>Our Collection</a>
           </li>
           <hr className='hr' />
           <li onClick={() => handleShowControlAndNavigate('/about')}>
             <a>About Us</a> {/* Use onClick to trigger navigation */}
           </li>
           <hr className='hr' />
-        </ul>
+        </ul> 
+        <div className='Nav-Footer'> 
+          <p> Witty Wardrobe © 2022. All rights reserved</p> 
+          <a className='p2'> Designed and Developed by Blaze Tech.</a>
+          </div>
       </nav>
     </>
   );

@@ -49,7 +49,7 @@ const Shirts = ({ onBuyNow }) => {
   return (
     <>
       <div className='heads'>
-        <h1>PRODUCTS</h1>
+        <h1>TOP PRODUCTS</h1>
       </div>
       <section className="shirts-section">
         <div className='Display-Products'>
