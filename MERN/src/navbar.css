@@ -130,7 +130,7 @@
           width: 8vw;  
     }   
     .mobile-list a{  
-      font-size: x-large; 
+      font-size: larger; 
       font-family: jura;
 
     }
@@ -163,9 +163,9 @@
       }  
       .Nav-Footer{  
        position: absolute; 
-       bottom: 3vh; 
+       bottom: 8vh; 
        left: 10%;
-        display: flex; 
+       display: flex; 
         flex-direction: column; 
         justify-content: center; 
         align-items: center;
@@ -206,12 +206,16 @@
       width: 300px;    
       position: relative; 
       right: 125%;
+    }   
+    .mobile-list a{  
+      font-size: medium; 
+      font-family: jura;
     }  
    } 
     
     @media (max-width: 412px) {
       .mobile-list a{  
-        font-size: large; 
+        font-size: medium; 
         font-family: jura;
       }  
       .Logo img{ 

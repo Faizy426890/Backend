@@ -8,7 +8,7 @@ const AddProducts = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const onSubmit = async (data) => {
     const wordCount = data.description.trim().split(/\s+/).length;
     if (wordCount > 100) {

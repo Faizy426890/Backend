@@ -69,19 +69,11 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
       throw new Error('No files uploaded');
     }
 
+    console.log('Files received:', req.files);
+
     for (const file of req.files) {
-      const filePath = file.path;
-
-      if (!fs.existsSync(filePath)) {
-        throw new Error('File not found');
-      }
-
-      const result = await uploadToCloudinary(filePath);
+      const result = await uploadToCloudinary(file.buffer);
       imageUrls.push(result.url);
-
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
     }
 
     const newProduct = new Product({
@@ -98,7 +90,6 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
     res.status(500).json({ error: 'Failed to add product.' });
   }
 });
-
 // Get products route
 app.get('/products', async (req, res) => {
   try {

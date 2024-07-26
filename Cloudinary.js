@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
 
 // Configure Cloudinary
 cloudinary.config({
@@ -8,29 +7,27 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const uploadToCloudinary = async (filepath) => {
+const uploadToCloudinary = async (fileBuffer) => {
   try {
-    if (!filepath) {
-      throw new Error('Filepath is required');
+    console.log('Uploading file buffer');
+    if (!fileBuffer) {
+      throw new Error('File buffer is required');
     }
 
-    // Upload the file to Cloudinary
-    const response = await cloudinary.uploader.upload(filepath);
+    // Upload the file buffer to Cloudinary
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      });
 
-    // Delete the file from the local filesystem after upload
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
-    }
-
-    return response;
+      stream.end(fileBuffer);
+    });
   } catch (error) {
     console.error('Error uploading to Cloudinary:', error);
-
-    // Ensure the file is deleted in case of an error as well
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath);
-    }
-
     throw error; // Re-throw the error so it can be handled by the caller
   }
 };

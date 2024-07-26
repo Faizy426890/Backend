@@ -42,7 +42,7 @@ const Footer = () => {
             <div className='social-icons'>
               <a href="https://www.facebook.com/wittywardrobe24?mibextid=ZbWKwL"><img src={Fb} alt="Facebook" /><i className="fa fa-facebook"></i></a>
               <a href="https://www.instagram.com/wittywardrobe24?igsh=dG9kbTBldGJqNWl4"><img src={insta} alt="Instagram" /><i className="fa fa-twitter"></i></a>
-              <a href="#"><img src={mail} alt="Mail" /><i className="fa fa-linkedin"></i></a>
+              <a href="mailto:wittywardrobe24@gmail.com"><img src={mail} alt="Mail" /><i className="fa fa-linkedin"></i></a>
               <a href="https://wa.me/+923064275081"><img src={whatsapp} alt="WhatsApp" /><i className="fa fa-github"></i></a>
             </div>
           </div>

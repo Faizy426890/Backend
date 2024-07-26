@@ -117,8 +117,8 @@ const ProductDesc = () => {
             <a href="https://www.instagram.com/wittywardrobe24?igsh=dG9kbTBldGJqNWl4" target="_blank" rel="noopener noreferrer">
               <img src={insta} alt="Instagram" />
             </a>
-            <img id='mail' src={mail} alt="Mail" /> 
-            <img src={whatsapp} alt="WhatsApp" />
+           <a href="mailto:wittywardrobe24@gmail.com"> <img id='mail' src={mail} alt="Mail" /> </a> 
+          <a href="https://wa.me/+923064275081"> <img src={whatsapp} alt="WhatsApp" /> </a>
           </div>
           <div className='Description'>
             <h2>Description</h2> 
