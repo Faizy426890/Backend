@@ -152,15 +152,22 @@ app.post('/send-order-confirmation', async (req, res) => {
 });
 app.put('/products/:id', async (req, res) => {
   const { id } = req.params;
-  const { stock } = req.body; // The new stock quantity
+  const { quantity } = req.body; // The quantity of the product being purchased
 
   try {
+    // Find the product by ID
     const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    product.productStock = stock; // Update the stock quantity
+    // Check if there is enough stock
+    if (product.productStock < quantity) {
+      return res.status(400).json({ message: 'Insufficient stock' });
+    }
+
+    // Decrement the stock quantity
+    product.productStock -= quantity;
     await product.save();
 
     res.status(200).json({ message: 'Stock updated successfully' });
@@ -168,6 +175,7 @@ app.put('/products/:id', async (req, res) => {
     res.status(500).json({ message: 'Error updating stock', error });
   }
 });
+
 
 // Get all orders route
 app.get('/Login/AdminPanel/Orders',async (req, res) => {
