@@ -142,7 +142,8 @@ const AdminPanel = () => {
                     </div>
                     <div className='Product-details'>
                       <h3>{product.productName}</h3>
-                      <p>{product.productPrice}</p>
+                      <p>{product.productPrice}</p> 
+                      <p>Stock Left: {product.productStock}</p>
                     </div>
                   </div>
                 ))}

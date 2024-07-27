@@ -33,8 +33,9 @@ const ConfirmOrder = () => {
       Image: product.image,
       orderTime: orderTime
     };
-
+  
     try {
+      // Place the order
       const orderResponse = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders`, {
         method: 'POST',
         headers: {
@@ -42,15 +43,30 @@ const ConfirmOrder = () => {
         },
         body: JSON.stringify(formData)
       });
-
+  
       if (!orderResponse.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const orderResponseData = await orderResponse.json();
       console.log('Order placed successfully:', orderResponseData);
-      reset();
-
+  
+      // Update the stock quantity in the database
+      const stockUpdateResponse = await fetch(`${import.meta.env.VITE_API_URL}/products/${product._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quantity }) // Subtract the purchased quantity from the stock
+      });
+  
+      if (!stockUpdateResponse.ok) {
+        throw new Error('Failed to update stock');
+      }
+  
+      const stockUpdateResponseData = await stockUpdateResponse.json();
+      console.log('Stock updated successfully:', stockUpdateResponseData);
+  
       // Send confirmation email
       const emailResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-order-confirmation`, {
         method: 'POST',
@@ -66,19 +82,21 @@ const ConfirmOrder = () => {
           }
         })
       });
-
+  
       if (!emailResponse.ok) {
         throw new Error('Failed to send confirmation email');
       }
-
+  
       const emailResponseData = await emailResponse.json();
       console.log('Confirmation email sent successfully:', emailResponseData);
-
+  
       setOrderConfirmed(true); // Set order confirmation state to true
+      reset(); // Reset the form after successful submission
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
