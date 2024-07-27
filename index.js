@@ -22,11 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // CORS configuration
 app.use(cors({
-  origin: 'https://www.wittywardrobe.store', // Allow only this origin
+  origin: 'https://www.wittywardrobe.store',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-
 // Middleware for basic authentication
 const basicAuth = (req, res, next) => {
   const { username, password } = req.body;
