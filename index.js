@@ -62,7 +62,7 @@ app.get('/Login/Check', (req, res) => {
 // Add product route
 app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, res) => {
   try {
-    const { productName, productPrice, productDescription } = req.body;
+    const { productName, productPrice, productDescription , productStock} = req.body;
     const imageUrls = [];
 
     if (!req.files || !Array.isArray(req.files)) {
@@ -78,7 +78,8 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
 
     const newProduct = new Product({
       productName,
-      productPrice,
+      productPrice, 
+      productStock,
       images: imageUrls,
       productDescription,
     });

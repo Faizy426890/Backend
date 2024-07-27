@@ -23,8 +23,9 @@ const AddProducts = () => {
     formData.append('productPrice', data.price);
     formData.append('images', data.picture1[0]);
     formData.append('images', data.picture2[0]);
-    formData.append('images', data.picture3[0]);
-    formData.append('productDescription', data.description);
+    formData.append('images', data.picture3[0]); 
+    formData.append('productDescription', data.description); 
+    formData.append('productStock', data.Stock)
 
     try {
       const response = await fetch(`${apiUrl}/Login/AdminPanel/Products`, {
@@ -90,6 +91,11 @@ const AddProducts = () => {
             {...register('description', { required: true })}
           />
           {errors.description && <span>{errors.description.message}</span>}
+        </div> 
+        <div className='puts'>
+          <label className='labels' htmlFor="Stock">Stock</label> <br />
+          <input className="inputs" type="number" {...register('Stock', { required: true })} />
+          {errors.price && <span>This field is required</span>}
         </div>
 
         <button id='button' type="submit" disabled={isSubmitting} className={isSubmitting ? 'disabled' : ''}>

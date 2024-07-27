@@ -133,7 +133,7 @@ const ProductDesc = () => {
         </div>
         <section className="shirts-section">
           <div className='Display-Products'>
-            {products.slice(0, 7).map((product) => (
+            {products.slice(5, 8).map((product) => (
               <div
                 key={product._id}
                 className="Product-container"
