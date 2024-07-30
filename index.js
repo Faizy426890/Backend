@@ -11,7 +11,6 @@ import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
 import PlacedOrder from './PlacedOrderSchema.js';
-import { v4 as uuidv4 } from 'uuid'; // Import uuid for unique IDs
 
 dotenv.config();
 
@@ -27,6 +26,21 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+// Middleware for basic authentication
+const basicAuth = (req, res, next) => {
+  const { username, password } = req.body;
+
+  console.log('Received credentials:', { username, password });
+
+  if (username === process.env.BASIC_AUTH_USERNAME && password === process.env.BASIC_AUTH_PASSWORD) {
+    req.user = username;
+    next();
+  } else {
+    res.status(401).json({ message: 'Unauthorized' });
+  }
+};
+
+
 
 // Basic route
 app.get('/', (req, res) => {
@@ -77,7 +91,6 @@ app.post('/Login/AdminPanel/Products', upload.array('images', 3), async (req, re
     res.status(500).json({ error: 'Failed to add product.' });
   }
 });
-
 // Get products route
 app.get('/products', async (req, res) => {
   try {
@@ -104,11 +117,7 @@ app.post('/Login/AdminPanel/Orders', async (req, res) => {
   try {
     const { Quantity, productName, Image, address, city, email, firstName, lastName, paymentMethod, phone, totalPrice, orderTime } = req.body;
 
-    // Generate a unique order ID
-    const orderId = uuidv4();
-
     const newOrder = new Order({
-      orderId,
       productName,
       Quantity,
       Image,
@@ -124,25 +133,69 @@ app.post('/Login/AdminPanel/Orders', async (req, res) => {
     });
 
     const savedOrder = await newOrder.save();
-
-    // Send order confirmation email with order ID
-    await sendOrderConfirmationEmail(email, {
-      orderId, // Include orderId in the email details
-      productName,
-      Quantity,
-      Image,
-      address,
-      city,
-      paymentMethod,
-      phone,
-      totalPrice,
-      orderTime,
-    });
-
     res.status(201).json(savedOrder);
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Send order confirmation email route
+app.post('/send-order-confirmation', async (req, res) => {
+  const { to, orderDetails } = req.body;
+
+  try {
+    await sendOrderConfirmationEmail(to, orderDetails);
+    res.status(200).json({ message: 'Order confirmation email sent successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to send order confirmation email' });
+  }
+});
+app.put('/products/:id', async (req, res) => {
+  const { id } = req.params;
+  const { quantity } = req.body; // The quantity of the product being purchased
+
+  try {
+    // Find the product by ID
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Check if there is enough stock
+    if (product.productStock < quantity) {
+      return res.status(400).json({ message: 'Insufficient stock' });
+    }
+
+    // Decrement the stock quantity
+    product.productStock -= quantity;
+    await product.save();
+
+    res.status(200).json({ message: 'Stock updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating stock', error });
+  }
+});
+
+
+// Get all orders route
+app.get('/Login/AdminPanel/Orders',async (req, res) => {
+  try {
+    const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch orders.' });
+  }
+});
+
+// Delete order route
+app.delete('/Login/AdminPanel/Orders/:id',async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Order.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Order deleted successfully.' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete order.' });
   }
 });
 
@@ -173,45 +226,10 @@ app.post('/Login/AdminPanel/Orders/PlacedOrder', async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // Send placed order confirmation email with the order ID from the deleted order
-    await sendPlacedOrderEmail(email, {
-      orderId: deletedOrder.orderId, // Include orderId in the email details
-      productName,
-      Quantity,
-      Image,
-      address,
-      city,
-      paymentMethod,
-      phone,
-      totalPrice,
-      orderTime,
-    });
-
     res.status(201).json({ message: 'Order placed successfully', order: placedOrder });
   } catch (error) {
     console.error('Error placing order:', error);
     res.status(500).json({ message: 'Error placing order', error });
-  }
-});
-
-// Get all orders route
-app.get('/Login/AdminPanel/Orders',async (req, res) => {
-  try {
-    const orders = await Order.find();
-    res.status(200).json(orders);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch orders.' });
-  }
-});
-
-// Delete order route
-app.delete('/Login/AdminPanel/Orders/:id',async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Order.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Order deleted successfully.' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to delete order.' });
   }
 });
 
@@ -222,18 +240,6 @@ app.get('/Login/AdminPanel/Orders/PlacedOrder',async (req, res) => {
     res.status(200).json(placedOrders);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch placed orders.' });
-  }
-});
-
-// Send order confirmation email route
-app.post('/send-order-confirmation', async (req, res) => {
-  const { to, orderDetails } = req.body;
-
-  try {
-    await sendOrderConfirmationEmail(to, orderDetails);
-    res.status(200).json({ message: 'Order confirmation email sent successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to send order confirmation email' });
   }
 });
 
@@ -248,7 +254,6 @@ app.post('/send-Placed-confirmation', async (req, res) => {
     res.status(500).json({ error: 'Failed to send order Placement email' });
   }
 });
-
 // Start the server after successful database connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,

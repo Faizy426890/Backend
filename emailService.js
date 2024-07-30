@@ -12,11 +12,11 @@ const sendOrderConfirmationEmail = async (to, orderDetails) => {
     sendSmtpEmail.sender = { email: 'faizanlahori2003@gmail.com', name: 'Witty Wardrobe' };
     sendSmtpEmail.subject = 'Order Confirmation';
 
-    const { orderId, orderDate, items, totalAmount } = orderDetails;
+    const { orderDate, items, totalAmount } = orderDetails;
 
     const textContent = `Dear Customer,
     
-Your order (ID: ${orderId}) has been confirmed on ${orderDate}.
+Your order has been confirmed on ${orderDate}.
 Total Amount: Rs ${totalAmount}
 
 Items:
@@ -25,10 +25,10 @@ ${items.map(item => `- ${item.name}: ${item.quantity} x ${item.price}`).join('\n
 Thank you for your purchase!
 
 Best regards,
-Witty Wardrobe`;
+  Witty Wardrobe`;
 
     const htmlContent = `<p>Dear Customer,</p>
-<p>Your order (ID: <strong>${orderId}</strong>) has been confirmed on <strong>${orderDate}</strong>.</p>
+<p>Your order has been confirmed on <strong>${orderDate}</strong>.</p>
 <p>Total Amount: Rs <strong>${totalAmount}</strong></p>
 <p><strong>Items:</strong></p>
 <ul>
