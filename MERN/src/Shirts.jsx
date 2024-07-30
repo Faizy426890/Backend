@@ -61,8 +61,11 @@ const Shirts = ({ onBuyNow }) => {
             >
               <div className='Product-list'>
                 {product.images[0] && <img src={product.images[0]} alt={product.productName} />} 
-                <h2>{product.productName}</h2>
-                <p>Rs: {product.productPrice}</p>    
+                <h2>{product.productName}</h2>  
+               <div className='prices'> 
+                <p className='old-price'>PKR: {product.oldPrice}</p>
+                <p>PKR: {product.productPrice}</p>     
+                </div>
               </div>
               <div className="wrapper">
                 <a 

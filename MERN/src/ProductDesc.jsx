@@ -102,7 +102,10 @@ const ProductDesc = () => {
         </div>
         <div className='Desc-data'>
           <h1>{product.productName}</h1>
-          <p>Rs: {product.productPrice}</p>
+          <div className='prices'> 
+                <p className='old-price'>PKR: {product.oldPrice}</p>
+                <p>PKR: {product.productPrice}</p>     
+                </div>
           <hr className='full' />
           <div className="quantity-control">
             <button type="button" className="minus" onClick={handleDecrement}>-</button>
@@ -141,8 +144,11 @@ const ProductDesc = () => {
               >
                 <div className='Product-list'>
                   {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
-                  <h2>{product.productName}</h2>
-                  <p>Rs: {product.productPrice}</p>
+                  <h2>{product.productName}</h2> 
+                  <div className='prices'> 
+                <p className='old-price'>PKR: {product.oldPrice}</p>
+                <p>PKR: {product.productPrice}</p>     
+                </div>
                 </div>
               </div>
             ))}

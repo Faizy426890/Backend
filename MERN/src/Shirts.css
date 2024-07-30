@@ -8,7 +8,15 @@
   padding: 20px;
   text-align: center;
   z-index: 0;
-} 
+}  
+.old-price{ 
+    text-decoration: line-through;
+    color: red;
+    margin-right: 10px;
+}
+.prices{ 
+  display: flex;
+}
 .AllProduct-head h1{  
 margin-top: 10vh;
 }

@@ -1,4 +1,5 @@
 import SibApiV3Sdk from 'sib-api-v3-sdk';
+import { v4 as uuidv4 } from 'uuid'; // Import uuid for generating unique IDs
 
 const apiKey = SibApiV3Sdk.ApiClient.instance.authentications['api-key'];
 apiKey.apiKey = process.env.REGISTERED_API_KEY;
@@ -13,10 +14,11 @@ const sendOrderConfirmationEmail = async (to, orderDetails) => {
     sendSmtpEmail.subject = 'Order Confirmation';
 
     const { orderDate, items, totalAmount } = orderDetails;
+    const orderId = uuidv4(); // Generate a unique order ID
 
     const textContent = `Dear Customer,
-    
-Your order has been confirmed on ${orderDate}.
+
+Your order with ID ${orderId} has been confirmed on ${orderDate}.
 Total Amount: Rs ${totalAmount}
 
 Items:
@@ -25,10 +27,10 @@ ${items.map(item => `- ${item.name}: ${item.quantity} x ${item.price}`).join('\n
 Thank you for your purchase!
 
 Best regards,
-  Witty Wardrobe`;
+Witty Wardrobe`;
 
     const htmlContent = `<p>Dear Customer,</p>
-<p>Your order has been confirmed on <strong>${orderDate}</strong>.</p>
+<p>Your order with ID <strong>${orderId}</strong> has been confirmed on <strong>${orderDate}</strong>.</p>
 <p>Total Amount: Rs <strong>${totalAmount}</strong></p>
 <p><strong>Items:</strong></p>
 <ul>

@@ -63,9 +63,12 @@ const AllProducts = ({ onBuyNow }) => {
           {memoizedProducts.map((product) => (
             <div key={product._id} className="Product-container" onClick={() => handleProductClick(product)}>
               <div className='Product-list'>
-                {product.images[0] && <img src={product.images[0]} alt={product.productName} />} 
-                <h2>{product.productName}</h2>
-                <p>Rs: {product.productPrice}</p>    
+                {product.images[0] && <img src={product.images[0]} alt={product.productName} />}    
+                <h2>{product.productName}</h2> 
+                <div className='prices'>
+                <p className='old-price'>PKR: {product.oldPrice}</p> 
+                <p>PKR: {product.productPrice}</p>     
+                </div>
               </div>
               <div className="wrapper">
                 <a className='a' onClick={(e) => handleBuyNow(e, product)}>Buy Now</a>

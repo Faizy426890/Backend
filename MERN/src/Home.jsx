@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Nav from './Navbar.jsx';  
 import './Home.css';  
@@ -10,6 +10,10 @@ const Home = () => {
   const [showAllProducts, setShowAllProducts] = useState(false);
   const navigate = useNavigate(); 
   const shirtsRef = useRef(null);
+
+  useEffect(() => {
+    alert("Order 2 products on the same day and get free delivery on the 2nd one. Reach us on WhatsApp to claim the free delivery of the second order...");
+  }, []);
 
   const handleShowAllProducts = () => {
     setShowAllProducts(true);

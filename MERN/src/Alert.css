@@ -1,0 +1,14 @@
+/* src/Alert.css */
+.alert {
+    background-color: black;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Make sure it's on top of other elements */
+    font-size: 16px;
+  }
+  
