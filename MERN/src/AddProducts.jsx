@@ -16,16 +16,17 @@ const AddProducts = () => {
       return;
     }
 
-    setIsSubmitting(true);
+    setIsSubmitting(true); 
 
     const formData = new FormData();
     formData.append('productName', data.name);
-    formData.append('productPrice', data.price);
+    formData.append('productPrice', data.price); 
+    formData.append('oldPrice', data.oldPrice);   
     formData.append('images', data.picture1[0]);
     formData.append('images', data.picture2[0]);
     formData.append('images', data.picture3[0]); 
     formData.append('productDescription', data.description); 
-    formData.append('productStock', data.Stock)
+    formData.append('productStock', data.Stock) 
 
     try {
       const response = await fetch(`${apiUrl}/Login/AdminPanel/Products`, {
@@ -62,6 +63,11 @@ const AddProducts = () => {
         <div className='puts'>
           <label className='labels' htmlFor="price">Price</label> <br />
           <input className="inputs" type="number" {...register('price', { required: true })} />
+          {errors.price && <span>This field is required</span>}
+        </div> 
+        <div className='puts'>
+          <label className='labels' htmlFor="oldPrice"> Old Price</label> <br />
+          <input className="inputs" type="number" {...register('oldPrice', { required: true })} />
           {errors.price && <span>This field is required</span>}
         </div>
 

@@ -38,7 +38,9 @@ margin-top: 10vh;
   height: 310px;
   width: 240px;
 }
-
+.Product-list h2 { 
+  font-size: 18px;
+}
 .loading {
   margin-top: 20px; /* Adjust as needed */
   font-size: 1.2em;
