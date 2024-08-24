@@ -11,7 +11,9 @@ const ConfirmOrder = () => {
   const [totalPrice, setTotalPrice] = useState(product ? product.productPrice * (initialQuantity || 1) : 0); 
   const [DeliveryCharges, setDeliveryCharges] = useState(249); 
   const [orderConfirmed, setOrderConfirmed] = useState(false); 
-  const [GrandTotal, setGrandTotal] = useState(totalPrice + DeliveryCharges);  // State to track order confirmation
+  const [GrandTotal, setGrandTotal] = useState(totalPrice + DeliveryCharges);  
+  const [stock, setStock] = useState(null); // State to track available stock
+  const [stockMessage, setStockMessage] = useState(''); // State to display stock messages
 
   useEffect(() => {
     if (product) {
@@ -23,7 +25,32 @@ const ConfirmOrder = () => {
     setGrandTotal(totalPrice + DeliveryCharges);
   }, [totalPrice, DeliveryCharges]);
 
+  useEffect(() => {
+    // Fetch current stock quantity for the product
+    const fetchStock = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${product._id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch stock');
+        }
+        const data = await response.json();
+        setStock(data.stock); // Assuming the API returns stock information
+      } catch (error) {
+        console.error('Error fetching stock:', error);
+      }
+    };
+
+    if (product) {
+      fetchStock();
+    }
+  }, [product]);
+
   const onSubmit = async (data) => {
+    if (stock !== null && quantity > stock) {
+      setStockMessage(`Remaining stock is ${stock}`);
+      return;
+    }
+
     const orderTime = new Date().toLocaleString();
     const formData = {
       ...data,
@@ -35,7 +62,6 @@ const ConfirmOrder = () => {
     };
   
     try {
-      // Place the order
       const orderResponse = await fetch(`${import.meta.env.VITE_API_URL}/Login/AdminPanel/Orders`, {
         method: 'POST',
         headers: {
@@ -51,13 +77,12 @@ const ConfirmOrder = () => {
       const orderResponseData = await orderResponse.json();
       console.log('Order placed successfully:', orderResponseData);
   
-      // Update the stock quantity in the database
       const stockUpdateResponse = await fetch(`${import.meta.env.VITE_API_URL}/products/${product._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ quantity }) // Subtract the purchased quantity from the stock
+        body: JSON.stringify({ quantity }) 
       });
   
       if (!stockUpdateResponse.ok) {
@@ -67,7 +92,6 @@ const ConfirmOrder = () => {
       const stockUpdateResponseData = await stockUpdateResponse.json();
       console.log('Stock updated successfully:', stockUpdateResponseData);
   
-      // Send confirmation email
       const emailResponse = await fetch(`${import.meta.env.VITE_API_URL}/send-order-confirmation`, {
         method: 'POST',
         headers: {
@@ -90,8 +114,8 @@ const ConfirmOrder = () => {
       const emailResponseData = await emailResponse.json();
       console.log('Confirmation email sent successfully:', emailResponseData);
   
-      setOrderConfirmed(true); // Set order confirmation state to true
-      reset(); // Reset the form after successful submission
+      setOrderConfirmed(true);
+      reset();
     } catch (error) {
       console.error('Error:', error);
     }
@@ -150,6 +174,7 @@ const ConfirmOrder = () => {
                     </label>
                     {errors.paymentMethod && <span>{errors.paymentMethod.message}</span>}
                   </div>
+                  {stockMessage && <p>{stockMessage}</p>}
                   {orderConfirmed ? (
                     <button className='submit' type="button" disabled>Order Confirmed</button>
                   ) : (

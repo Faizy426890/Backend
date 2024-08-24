@@ -12,7 +12,7 @@ const Shirts = ({ onBuyNow }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${apiUrl}/products`, { // Corrected URL with template literals
+        const response = await fetch(`${apiUrl}/products`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -32,7 +32,7 @@ const Shirts = ({ onBuyNow }) => {
     };
 
     fetchProducts();
-  }, [apiUrl]); // Added apiUrl as dependency to useEffect
+  }, [apiUrl]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -44,6 +44,11 @@ const Shirts = ({ onBuyNow }) => {
 
   const handleProductClick = (product) => {
     navigate('/ProductDesc', { state: { product } });
+  };
+
+  const handleBuyNowClick = (e, product) => {
+    e.stopPropagation(); // Prevent triggering product click
+    onBuyNow(product);
   };
 
   return (
@@ -60,30 +65,29 @@ const Shirts = ({ onBuyNow }) => {
               onClick={() => handleProductClick(product)}
             >
               <div className='Product-list'>
-                {product.images[0] && <img src={product.images[0]} alt={product.productName} />} 
-                <h2>{product.productName}</h2>  
-               <div className='prices'> 
-                <p className='old-price'>PKR: {product.oldPrice}</p>
-                <p>PKR: {product.productPrice}</p>     
+                {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
+                <h2>{product.productName}</h2>
+                <div className='prices'> 
+                  <p className='old-price'>PKR: {product.oldPrice}</p>
+                  <p>PKR: {product.productPrice}</p>     
                 </div>
+                {product.productStock === 0 ? (
+                  <p className="sold-out">Sold Out</p>
+                ) : (
+                  <a 
+                    className='a' 
+                    onClick={(e) => handleBuyNowClick(e, product)}
+                  >
+                    Buy Now
+                  </a>
+                )}
               </div>
-              <div className="wrapper">
-                <a 
-                  className='a' 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onBuyNow(product);
-                  }}
-                >
-                  Buy Now
-                </a>
-              </div>
-            </div> 
+            </div>
           ))}
         </div>
-      </section> 
+      </section>
     </>
   );
-}
+};
 
 export default Shirts;

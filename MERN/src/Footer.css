@@ -3,7 +3,7 @@
 .footer-distributed { 
     position: relative; 
     top: 15vh;
-    background: rgb(20, 20, 20); 
+    background-color: rgb(10, 10, 10); ;
     color: #ffffff;
     font: bold 16px sans-serif;
     padding: 50px 50px;
@@ -152,14 +152,13 @@
     background-color: #5383d3;
   }
   @media (max-width: 568px) {  
-
     .footer-bottom { 
       display: flex; 
       text-align: center;  
-      justify-content: center;
-      width: 100vw;
+      justify-content: center;    
+      width: 100vw;  
      position: relative;  
-     font-size: 9px;
+     font-size: 9px; 
      bottom: -50px;
     }
   } 

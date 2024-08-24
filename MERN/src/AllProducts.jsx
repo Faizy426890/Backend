@@ -14,7 +14,7 @@ const AllProducts = ({ onBuyNow }) => {
       try {
         const response = await fetch(`${apiUrl}/products`, {
           method: 'GET',
-          credentials: 'include', // Include cookies with request if needed
+          credentials: 'include',
         });
 
         if (!response.ok) {
@@ -41,8 +41,10 @@ const AllProducts = ({ onBuyNow }) => {
   };
 
   const handleBuyNow = (e, product) => {
-    e.stopPropagation(); // Prevent the click from bubbling up to the product container
-    onBuyNow(product);
+    e.stopPropagation(); // Prevent click event from bubbling up
+    if (product.productStock > 0) { // Ensure stock is greater than 0 before proceeding
+      onBuyNow(product);
+    }
   };
 
   if (isLoading) {
@@ -66,12 +68,16 @@ const AllProducts = ({ onBuyNow }) => {
                 {product.images[0] && <img src={product.images[0]} alt={product.productName} />}    
                 <h2>{product.productName}</h2> 
                 <div className='prices'>
-                <p className='old-price'>PKR: {product.oldPrice}</p> 
-                <p>PKR: {product.productPrice}</p>     
+                  <p className='old-price'>PKR: {product.oldPrice}</p> 
+                  <p>PKR: {product.productPrice}</p>     
                 </div>
               </div>
               <div className="wrapper">
-                <a className='a' onClick={(e) => handleBuyNow(e, product)}>Buy Now</a>
+                {product.productStock === 0 ? (
+                  <a className='sold-out'>Sold Out</a>
+                ) : (
+                  <a className='a' onClick={(e) => handleBuyNow(e, product)}>Buy Now</a>
+                )}
               </div>
             </div>
           ))}

@@ -1,0 +1,84 @@
+.review-form {
+    width: 70vw;
+    margin: 30px auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+    border: 1px solid #535353;
+    border-radius: 5px;
+    background-color: #131212; /* Darker background */
+  }
+  
+  .review-form div {
+    flex: 1 1 calc(50% - 30px); /* Two columns with gap */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .review-form div.full-width {
+    flex: 1 1 100%; /* Full width for certain fields */
+  }
+  
+  .review-form label {
+    margin-bottom: 10px;
+    font-weight: bold; 
+    font-family: jura;
+    color: #ffffff; /* Lighter label text */
+  }
+  
+  .review-form input,
+  .review-form textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #616161;
+    border-radius: 4px;
+    background-color: #222222; /* Darker input background */
+    color: #ffffff; /* Light input text color */
+  }
+  
+  .review-form textarea {
+    min-height: 100px;
+  }
+  
+  .Submit-Review {
+    width: 300px;
+    height: 40px;
+    color: white;
+    background-color: #1c1c1c; /* Darker button background */
+    border: 1px solid #a0a0a0;
+    cursor: pointer; 
+    font-size: medium; 
+    display: block;  
+    margin: 20px auto 0; 
+    font-weight: 100; 
+    transition: background-color 0.4s ease-in, color 0.4s ease-in;
+  }
+  
+  .review-form button:hover {
+    background-color: #bdbdbd; /* Lighter hover background */
+    color: black;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.875em;
+  } 
+
+  @media (max-width: 1080px) { 
+    .Submit-Review{ 
+        width: 230px;
+        height: 40px;
+        font-size: small;
+        font-weight: 100; 
+    }
+
+  }
+  @media (max-width: 768px) { 
+    .review-form { 
+    flex-direction: column; 
+    width: 90vw;
+    }
+  }

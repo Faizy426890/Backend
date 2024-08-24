@@ -105,14 +105,18 @@ const ProductDesc = () => {
           <div className='prices'> 
                 <p className='old-price'>PKR: {product.oldPrice}</p>
                 <p>PKR: {product.productPrice}</p>     
-                </div>
+          </div>
           <hr className='full' />
           <div className="quantity-control">
             <button type="button" className="minus" onClick={handleDecrement}>-</button>
             <span className="quantity">{quantity}</span>
             <button type="button" className="plus" onClick={handleIncrement}>+</button>
           </div>
-          <a className='a' onClick={handleBuyNow}>Buy Now</a>
+          {product.productStock > 0 ? (
+            <a className='a' onClick={handleBuyNow}>Buy Now</a>
+          ) : (
+            <span className='sold-out'>Sold Out</span>
+          )}
           <div className='social-icons'>
             <a href="https://www.facebook.com/wittywardrobe24?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
               <img src={Fb} alt="Facebook" />
@@ -121,7 +125,7 @@ const ProductDesc = () => {
               <img src={insta} alt="Instagram" />
             </a>
            <a href="mailto:wittywardrobe24@gmail.com"> <img id='mail' src={mail} alt="Mail" /> </a> 
-          <a href="https://wa.me/+923064275081"> <img src={whatsapp} alt="WhatsApp" /> </a>
+           <a href="https://wa.me/+923064275081"> <img src={whatsapp} alt="WhatsApp" /> </a>
           </div>
           <div className='Description'>
             <h2>Description</h2> 
@@ -146,9 +150,9 @@ const ProductDesc = () => {
                   {product.images[0] && <img src={product.images[0]} alt={product.productName} />}
                   <h2>{product.productName}</h2> 
                   <div className='prices'> 
-                <p className='old-price'>PKR: {product.oldPrice}</p>
-                <p>PKR: {product.productPrice}</p>     
-                </div>
+                    <p className='old-price'>PKR: {product.oldPrice}</p>
+                    <p>PKR: {product.productPrice}</p>     
+                  </div>
                 </div>
               </div>
             ))}

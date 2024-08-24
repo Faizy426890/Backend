@@ -3,7 +3,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import Nav from './Navbar.jsx';  
 import './Home.css';  
 import Shirts from './Shirts.jsx'; 
-import Cover from './images/Cover.jfif';    
+import Cover from './images/Cover.jfif';     
+import Reviews from './Reviews.jsx';
 import About from './About.jsx';  // Import the About component  
 
 const Home = () => {
@@ -49,7 +50,8 @@ const Home = () => {
             </section>  
             <div ref={shirtsRef}>
               <Shirts showAllProducts={showAllProducts} onBuyNow={handleBuyNow} />  
-            </div>
+            </div> 
+            <Reviews/>
           </div>
         } />
         <Route path="/about" element={<About />} /> 

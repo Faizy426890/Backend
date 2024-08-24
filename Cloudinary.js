@@ -1,6 +1,8 @@
 import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';   
+// Load environment variables from .env file
+dotenv.config();
 
-// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -8,28 +10,23 @@ cloudinary.config({
 });
 
 const uploadToCloudinary = async (fileBuffer) => {
-  try {
-    console.log('Uploading file buffer');
-    if (!fileBuffer) {
-      throw new Error('File buffer is required');
-    }
-
-    // Upload the file buffer to Cloudinary
-    return new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream((error, result) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(error);
-        }
-      });
-
-      stream.end(fileBuffer);
-    });
-  } catch (error) {
-    console.error('Error uploading to Cloudinary:', error);
-    throw error; // Re-throw the error so it can be handled by the caller
+  if (!fileBuffer) {
+    throw new Error('File buffer is required');
   }
+
+  return new Promise((resolve, reject) => {
+    // Upload the image to Cloudinary using upload_stream
+    const stream = cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+      if (error) {
+        console.error('Cloudinary upload error:', error);
+        return reject(error);
+      }
+      // Resolve with the URL of the uploaded image
+      resolve(result.secure_url);
+    });
+
+    stream.end(fileBuffer);
+  });
 };
 
 export { uploadToCloudinary };

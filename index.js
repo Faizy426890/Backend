@@ -10,7 +10,8 @@ import fs from 'fs';
 import sendOrderConfirmationEmail from './emailService.js';
 import sendPlacedOrderEmail from './OrderPlacedMail.js';
 import Order from './OrderSchema.js';
-import PlacedOrder from './PlacedOrderSchema.js';
+import PlacedOrder from './PlacedOrderSchema.js'; 
+import Review from './ReviewSchema.js';
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // CORS configuration
 app.use(cors({
-  origin: 'https://www.wittywardrobe.store',
+  origin: 'https://www.wittywardrobe.store',  
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
@@ -253,11 +254,45 @@ app.post('/send-Placed-confirmation', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to send order Placement email' });
   }
+}); 
+app.post('/reviews', async (req, res) => {
+  try {
+    const { name, email, review } = req.body;
+    
+    // Create a new review without the photos array
+    const newReview = new Review({
+      name,
+      email,
+      review,
+    });
+
+    await newReview.save(); // Save the review
+    res.status(201).json({ message: 'Review submitted successfully', newReview });
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    res.status(500).json({ message: 'Error submitting review', error });
+  }
 });
+
+app.get('/reviews',async (req, res) => {
+  try {
+    const Reviews = await Review.find();
+    res.status(200).json(Reviews);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch Reviews.' });
+  }
+});
+
 // Start the server after successful database connection
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('MongoDB connected');
+})
+.catch(err => {
+  console.error('MongoDB connection error:', err);
 });
 
 mongoose.connection.once('open', () => {
